@@ -37,6 +37,33 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `yarn lint`
+
+For checking code style.
+You can also add `--fix` option to auto fix the code style problems
+
+For configuration linter, it is following by [eslint](https://eslint.org/).
+
+___
+
+## About the development tools
+
+### `typescript`
+Typescript is a typed superset of JavaScript that compiles to plain JavaScript.
+It will help developer write strongly type program in JavaScript.  
+[learn more about typescript](https://www.typescriptlang.org/docs/home.html)
+
+### `husky`
+This project use husky to block code style problems.  
+[learn more about husky](https://github.com/typicode/husky#readme)
+
+### `lint-staged`
+This package will improve husky to run fater, it will return only `staged` files from git local machine.  
+[learn more about lint-staged](https://github.com/okonet/lint-staged)
+
+___
+
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
