@@ -28,7 +28,8 @@
         "tsx": "never"
       }
     ],
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["error"],
+    "react/jsx-fragments": ["error", "element"]
   },
   "parserOptions": {
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
