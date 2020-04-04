@@ -44,25 +44,32 @@ You can also add `--fix` option to auto fix the code style problems
 
 For configuration linter, it is following by [eslint](https://eslint.org/).
 
-___
+---
 
 ## About the development tools
 
 ### `typescript`
+
 Typescript is a typed superset of JavaScript that compiles to plain JavaScript.
 It will help developer write strongly type program in JavaScript.  
 [learn more about typescript](https://www.typescriptlang.org/docs/home.html)
 
+#### more document about using typescript in react application
+
+- [Typescript react & webpack handbook (official site)](https://www.typescriptlang.org/docs/handbook/react-&-webpack.html)
+- [React typescript cheatsheet](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet)
+
 ### `husky`
+
 This project use husky to block code style problems.  
 [learn more about husky](https://github.com/typicode/husky#readme)
 
 ### `lint-staged`
+
 This package will improve husky to run fater, it will return only `staged` files from git local machine.  
 [learn more about lint-staged](https://github.com/okonet/lint-staged)
 
-___
-
+---
 
 ## Learn More
 
