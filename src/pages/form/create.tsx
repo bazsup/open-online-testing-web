@@ -78,12 +78,6 @@ const renderAllFields = (fields: Field[]): JSX.Element[] => {
 };
 /* eslint-enable */
 
-interface FormType {
-  name: string;
-  description: string;
-  fields: Field[];
-}
-
 const CreateFormPage = (): JSX.Element => {
   const [selectedTag, setSelectedTag] = useState<FieldType>(FieldType.INPUT);
 
