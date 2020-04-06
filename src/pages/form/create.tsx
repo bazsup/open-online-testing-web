@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import * as Formik from 'formik';
+import axios from 'axios';
 import {
   FieldTemplate,
   InputFieldTemplate,
@@ -84,7 +85,7 @@ const requestToCreateForm = (requestFormBody: Form) => {
   // console.log('!!!requestToCreateForm !!!');
   // console.log(requestFormBody);
   // console.log(process.env.REACT_APP_BACKEND_API);
-  return requestFormBody;
+  axios.post(`${process.env.REACT_APP_BACKEND_API}/form`, requestFormBody);
 };
 
 const CreateFormPage = (): JSX.Element => {
