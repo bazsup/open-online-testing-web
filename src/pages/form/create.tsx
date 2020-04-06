@@ -83,6 +83,7 @@ const renderAllFields = (fields: Field[]): JSX.Element[] => {
 const requestToCreateForm = (requestFormBody: Form) => {
   // console.log('!!!requestToCreateForm !!!');
   // console.log(requestFormBody);
+  // console.log(process.env.REACT_APP_BACKEND_API);
   return requestFormBody;
 };
 
