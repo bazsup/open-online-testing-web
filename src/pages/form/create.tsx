@@ -7,7 +7,8 @@ import {
   SelectFieldTemplate,
   FieldType,
   FieldData,
-  Field
+  Field,
+  Form
 } from './create.d';
 import { Input, TextArea, Select } from '../../components/fields';
 
@@ -40,6 +41,7 @@ const getFieldData = (type: FieldType): FieldTemplate => {
 
 /* eslint-disable react/no-array-index-key */
 const renderAllFields = (fields: Field[]): JSX.Element[] => {
+  // console.log(fields);
   return fields.map(
     (field, index): JSX.Element => {
       switch (field.fieldType) {
@@ -78,6 +80,12 @@ const renderAllFields = (fields: Field[]): JSX.Element[] => {
 };
 /* eslint-enable */
 
+const requestToCreateForm = (requestFormBody: Form) => {
+  // console.log('!!!requestToCreateForm !!!');
+  // console.log(requestFormBody);
+  return requestFormBody;
+};
+
 const CreateFormPage = (): JSX.Element => {
   const [selectedTag, setSelectedTag] = useState<FieldType>(FieldType.INPUT);
 
@@ -104,7 +112,8 @@ const CreateFormPage = (): JSX.Element => {
           fields: [] as Field[]
         }}
         onSubmit={(values): void => {
-          console.log(values);
+          // console.log(values);
+          requestToCreateForm(values);
         }}
       >
         {({ values }): JSX.Element => (

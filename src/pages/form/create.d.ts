@@ -1,3 +1,5 @@
+// import { type } from 'os';
+
 export interface FieldTemplate {
   name: string;
   required: boolean;
@@ -32,6 +34,12 @@ export enum FieldType {
 
 export type FieldData = {
   [key in FieldType]?: FieldTemplate;
+};
+
+export type Form = {
+  name: string;
+  description: string;
+  fields: Field[];
 };
 
 export interface Field {
