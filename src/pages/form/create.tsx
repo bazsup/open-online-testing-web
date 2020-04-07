@@ -9,26 +9,25 @@ import {
   FieldType,
   FieldData,
   Field,
-  Form
+  Form,
+  Attribute
 } from './create.d';
 import { Input, TextArea, Select } from '../../components/fields';
 
 const getFieldData = (type: FieldType): FieldTemplate => {
   const input: InputFieldTemplate = {
     type: 'text',
-    name: '',
+    label: '',
     placeholder: '',
     required: false
   };
   const textarea: TextAreaFieldTemplate = {
-    name: '',
-    rows: 3,
-    cols: 30,
+    label: '',
     placeholder: '',
     required: false
   };
   const select: SelectFieldTemplate = {
-    name: '',
+    label: '',
     required: false,
     choiceList: []
   };
@@ -38,6 +37,22 @@ const getFieldData = (type: FieldType): FieldTemplate => {
     select
   };
   return fieldData[type] || input;
+};
+
+const getFieldAttributes = (type: FieldType): Attribute[] => {
+  if (type === FieldType.TEXTAREA) {
+    return [
+      {
+        name: 'rows',
+        value: '5'
+      },
+      {
+        name: 'cols',
+        value: '30'
+      }
+    ];
+  }
+  return [];
 };
 
 /* eslint-disable react/no-array-index-key */
@@ -83,7 +98,7 @@ const renderAllFields = (fields: Field[]): JSX.Element[] => {
 
 const requestToCreateForm = (requestFormBody: Form) => {
   // console.log('!!!requestToCreateForm !!!');
-  // console.log(requestFormBody);
+  console.log(requestFormBody);
   // console.log(process.env.REACT_APP_BACKEND_API);
   axios.post(`${process.env.REACT_APP_BACKEND_API}/form`, requestFormBody);
 };
@@ -100,7 +115,8 @@ const CreateFormPage = (): JSX.Element => {
   const addTagToList = useCallback((): Field => {
     const field: Field = {
       fieldType: selectedTag,
-      fieldData: getFieldData(selectedTag)
+      fieldData: getFieldData(selectedTag),
+      attributes: getFieldAttributes(selectedTag)
     };
     return field;
   }, [selectedTag]);

@@ -1,7 +1,5 @@
-// import { type } from 'os';
-
 export interface FieldTemplate {
-  name: string;
+  label: string;
   required: boolean;
 }
 
@@ -12,8 +10,11 @@ export interface InputFieldTemplate extends FieldTemplate {
 
 export interface TextAreaFieldTemplate extends FieldTemplate {
   placeholder: string;
-  rows: number;
-  cols: number;
+}
+
+export interface Attribute {
+  name: string;
+  value: string;
 }
 
 export interface Choice {
@@ -45,4 +46,5 @@ export type Form = {
 export interface Field {
   fieldType: FieldType;
   fieldData: FieldTemplate;
+  attributes: Attribute[];
 }
