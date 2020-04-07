@@ -1,13 +1,18 @@
 import React from 'react';
 import { FieldArray, Field } from 'formik';
-import { SelectFieldTemplate } from '../../pages/form/create.d';
-
+import { SelectFieldTemplate, Choice } from '../../pages/form/create.d';
+// ที่ส่งตัวแปรจากข้างนอกเข้ามา
 interface SelectProps {
   index: number;
   fieldData: SelectFieldTemplate;
+  choiceList: Choice[];
 }
 
-const Select: React.FC<SelectProps> = ({ index, fieldData }: SelectProps) => {
+const Select: React.FC<SelectProps> = ({
+  index,
+  fieldData,
+  choiceList
+}: SelectProps) => {
   return (
     <div style={{ margin: '10px 0', border: '1px solid #333' }}>
       <p>tag: select</p>
@@ -25,27 +30,27 @@ const Select: React.FC<SelectProps> = ({ index, fieldData }: SelectProps) => {
           value={fieldData.required}
         />
       </p>
-      {fieldData.choiceList.map((choice, choiceIndex) => (
+      {choiceList.map((choice, choiceIndex) => (
         // eslint-disable-next-line react/no-array-index-key
         <div key={`${choiceIndex}`} style={{ border: '1px solid pink' }}>
           <p>{`ตัวเลือกที่ ${choiceIndex}`}</p>
           <p>
             {'label: '}
             <Field
-              name={`fields.${index}.fieldData.choiceList.${choiceIndex}.label`}
+              name={`fields.${index}.choiceList.${choiceIndex}.label`}
               value={choice.label}
             />
           </p>
           <p>
             {'value: '}
             <Field
-              name={`fields.${index}.fieldData.choiceList.${choiceIndex}.value`}
+              name={`fields.${index}.choiceList.${choiceIndex}.value`}
               value={choice.value}
             />
           </p>
         </div>
       ))}
-      <FieldArray name={`fields.${index}.fieldData.choiceList`}>
+      <FieldArray name={`fields.${index}.choiceList`}>
         {(arrayHelper): JSX.Element => (
           <button
             type="button"

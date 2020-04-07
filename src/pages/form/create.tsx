@@ -10,7 +10,8 @@ import {
   FieldData,
   Field,
   Form,
-  Attribute
+  Attribute,
+  Choice
 } from './create.d';
 import { Input, TextArea, Select } from '../../components/fields';
 
@@ -85,6 +86,7 @@ const renderAllFields = (fields: Field[]): JSX.Element[] => {
               key={index}
               index={index}
               fieldData={field.fieldData as SelectFieldTemplate}
+              choiceList={field.choiceList as Choice[]}
             />
           );
 
@@ -116,8 +118,10 @@ const CreateFormPage = (): JSX.Element => {
     const field: Field = {
       fieldType: selectedTag,
       fieldData: getFieldData(selectedTag),
-      attributes: getFieldAttributes(selectedTag)
+      attributes: getFieldAttributes(selectedTag),
+      choiceList: []
     };
+    console.log('fuq need parsed choice', getFieldData(selectedTag));
     return field;
   }, [selectedTag]);
 

@@ -47,4 +47,5 @@ export interface Field {
   fieldType: FieldType;
   fieldData: FieldTemplate;
   attributes: Attribute[];
+  choiceList: Choice[];
 }
