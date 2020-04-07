@@ -20,11 +20,11 @@ const TextArea: React.FC<TextAreaProps> = ({
       </p>
       <p>
         {'rows: '}
-        <Field name={`fields.${index}.attributes.0.name`} type="number" />
+        <Field name={`fields.${index}.attributes.0.value`} type="number" />
       </p>
       <p>
         {'cols: '}
-        <Field name={`fields.${index}.attributes.1.name`} type="number" />
+        <Field name={`fields.${index}.attributes.1.value`} type="number" />
       </p>
       <p>
         {'placeholder: '}
