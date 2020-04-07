@@ -16,30 +16,19 @@ const TextArea: React.FC<TextAreaProps> = ({
       <p>tag: textarea</p>
       <p>
         {'name: '}
-        <Field name={`fields.${index}.fieldData.name`} value={fieldData.name} />
+        <Field name={`fields.${index}.fieldData.label`} />
       </p>
       <p>
         {'rows: '}
-        <Field
-          name={`fields.${index}.fieldData.rows`}
-          type="number"
-          value={fieldData.rows}
-        />
+        <Field name={`fields.${index}.attributes.0.name`} type="number" />
       </p>
       <p>
         {'cols: '}
-        <Field
-          name={`fields.${index}.fieldData.cols`}
-          type="number"
-          value={fieldData.cols}
-        />
+        <Field name={`fields.${index}.attributes.1.name`} type="number" />
       </p>
       <p>
         {'placeholder: '}
-        <Field
-          name={`fields.${index}.fieldData.placeholder`}
-          value={fieldData.placeholder}
-        />
+        <Field name={`fields.${index}.placeholder`} />
       </p>
       <p>
         {'required: '}

@@ -19,7 +19,7 @@ const Input: React.FC<InputProps> = ({
     </p>
     <p>
       {'name: '}
-      <Field name={`fields.${index}.fieldData.name`} value={fieldData.name} />
+      <Field name={`fields.${index}.fieldData.label`} value={fieldData.label} />
     </p>
     <p>
       {'placeholder: '}

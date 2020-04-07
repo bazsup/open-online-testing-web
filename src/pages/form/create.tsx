@@ -16,19 +16,17 @@ import { Input, TextArea, Select } from '../../components/fields';
 const getFieldData = (type: FieldType): FieldTemplate => {
   const input: InputFieldTemplate = {
     type: 'text',
-    name: '',
+    label: '',
     placeholder: '',
     required: false
   };
   const textarea: TextAreaFieldTemplate = {
-    name: '',
-    rows: 3,
-    cols: 30,
+    label: '',
     placeholder: '',
     required: false
   };
   const select: SelectFieldTemplate = {
-    name: '',
+    label: '',
     required: false,
     choiceList: []
   };
@@ -99,6 +97,7 @@ const CreateFormPage = (): JSX.Element => {
 
   const addTagToList = useCallback((): Field => {
     const field: Field = {
+      attributes: [],
       fieldType: selectedTag,
       fieldData: getFieldData(selectedTag)
     };
