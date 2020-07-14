@@ -16,17 +16,16 @@ const TypeSelector = styled.div`
   height: 120px;
   margin: 0 20px 10px 20px;
   width: 300px;
-
-  .icon {
-    max-width: 40px;
-    margin: 0 15px 10px 15px;
-    color: ${(props) => (props.active ? 'white' : color.purple)};
-  }
 `
 
-export default ({ img, label, active = false }) => (
+const Icon = styled.span`
+  font-size: 40px;
+  margin-bottom: 5px;
+`
+
+export default ({ icon: iconName, label, active = false }) => (
   <TypeSelector active={active}>
-    <img src={img} className='icon' alt='wow' />
+    <Icon className={`icon-${iconName}`} />
     {label}
   </TypeSelector>
 )
