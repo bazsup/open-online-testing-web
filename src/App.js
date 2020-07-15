@@ -3,20 +3,23 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
 import ManagePage from './pages/manage'
+import CreateQuestionPage from './pages/createQuestion'
 
 function App() {
   return (
     <React.Fragment>
       <Router>
         <Navbar />
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path='/manage'>
-            <ManagePage />
-          </Route>
-          <Route path='/'>ดีงัฟฟ</Route>
-        </Switch>
+        <div className='container mt-5'>
+          <Switch>
+            <Route path='/manage' exact component={ManagePage} />
+            <Route
+              path='/manage/question/create'
+              component={CreateQuestionPage}
+            />
+            <Route path='/'>ดีงัฟฟ</Route>
+          </Switch>
+        </div>
       </Router>
     </React.Fragment>
   )

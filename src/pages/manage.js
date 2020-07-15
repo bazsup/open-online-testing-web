@@ -78,46 +78,42 @@ const data = [
 
 export default () => (
   <React.Fragment>
-    <div className='container mt-5'>
-      <div className='d-flex justify-content-center'>
-        <TypeSelector label='จัดการคำถาม' icon='question' active />
-        <TypeSelector label='จัดการข้อสอบ' icon='exam' />
-      </div>
-      <div className='row justify-content-md-center mt-3'>
-        <div className='col-10'>
-          <Segment className='px-5 py-5'>
-            <div className='row'>
-              <div className='col-9'>
-                <div className='d-flex justify-content-between align-items-center mb-4'>
-                  <Title>จัดการคำถาม</Title>
-                  <Button content='+ สร้างคำถาม' />
-                </div>
-                {data.length === 0 ? (
-                  <Segment>
-                    <Empty />
-                  </Segment>
-                ) : (
-                  <React.Fragment>
-                    <Search className='mb-3' />
-                    <Accordion fluid styled>
-                      {data.map(
-                        ({ name, type, choices, categories }, index) => (
-                          <QuestionAccordion
-                            name={name}
-                            type={type}
-                            choices={choices}
-                            categories={categories}
-                            index={index}
-                          />
-                        )
-                      )}
-                    </Accordion>
-                  </React.Fragment>
-                )}
+    <div className='d-flex justify-content-center'>
+      <TypeSelector label='จัดการคำถาม' icon='question' active />
+      <TypeSelector label='จัดการข้อสอบ' icon='exam' />
+    </div>
+    <div className='row justify-content-md-center mt-3'>
+      <div className='col-10'>
+        <Segment className='px-5 py-5'>
+          <div className='row'>
+            <div className='col-9'>
+              <div className='d-flex justify-content-between align-items-center mb-4'>
+                <Title>จัดการคำถาม</Title>
+                <Button content='+ สร้างคำถาม' />
               </div>
+              {data.length === 0 ? (
+                <Segment>
+                  <Empty />
+                </Segment>
+              ) : (
+                <React.Fragment>
+                  <Search className='mb-3' />
+                  <Accordion fluid styled>
+                    {data.map(({ name, type, choices, categories }, index) => (
+                      <QuestionAccordion
+                        name={name}
+                        type={type}
+                        choices={choices}
+                        categories={categories}
+                        index={index}
+                      />
+                    ))}
+                  </Accordion>
+                </React.Fragment>
+              )}
             </div>
-          </Segment>
-        </div>
+          </div>
+        </Segment>
       </div>
     </div>
   </React.Fragment>
