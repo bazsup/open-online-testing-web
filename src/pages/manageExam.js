@@ -102,7 +102,7 @@ const ExamList = () => {
               <div className="col-12">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <SegmentTitle>จัดการข้อสอบ</SegmentTitle>
-                  <Link>
+                  <Link to='/manage/exam/create'>
                     <CallToActionButton content='+ สร้างข้อสอบ' />
                   </Link>
                 </div>

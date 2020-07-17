@@ -5,6 +5,7 @@ import Navbar from './components/Navbar'
 import ManagePage from './pages/manage'
 import ManageExamPage from './pages/manageExam'
 import CreateQuestionPage from './pages/createQuestion'
+import CreateExamPage from './pages/createExam'
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
             <Route
               path='/manage/question/create'
               component={CreateQuestionPage}
+            />
+            <Route
+              path='/manage/exam/create'
+              component={CreateExamPage}
             />
             <Route path='/'>ดีงัฟฟ</Route>
           </Switch>
