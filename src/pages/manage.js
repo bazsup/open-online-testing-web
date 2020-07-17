@@ -72,7 +72,7 @@ export default () => (
       <div className='col-10'>
         <Segment className='px-5 py-5'>
           <div className='row'>
-            <div className='col-9'>
+            <div className='col-12'>
               <div className='d-flex justify-content-between align-items-center mb-4'>
                 <SegmentTitle>จัดการคำถาม</SegmentTitle>
                 <Link to='/manage/question/create'>
