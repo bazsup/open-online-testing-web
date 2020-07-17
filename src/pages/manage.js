@@ -2,15 +2,14 @@ import React from 'react'
 import QuestionAccordion from '../components/QuestionAccordion'
 import {
   Segment,
-  Button as UnstyleButton,
   Accordion,
   Search,
 } from 'semantic-ui-react'
 import styled from '@emotion/styled'
 import { Empty } from 'antd'
-import { color } from '../constants'
 import { Link } from 'react-router-dom'
 import ManageNavigation from '../components/Manage/ManageNavigation'
+import { CallToActionButton } from '../elements/CallToActionButton'
 
 const Title = styled.h2`
   font-size: 24px;
@@ -18,10 +17,7 @@ const Title = styled.h2`
   margin: 0;
 `
 
-const Button = styled(UnstyleButton)`
-  background-color: ${color.purple} !important;
-  color: white !important;
-`
+
 
 const data = [
   {
@@ -88,7 +84,7 @@ export default () => (
               <div className='d-flex justify-content-between align-items-center mb-4'>
                 <Title>จัดการคำถาม</Title>
                 <Link to='/manage/question/create'>
-                  <Button content='+ สร้างคำถาม' />
+                  <CallToActionButton content='+ สร้างคำถาม' />
                 </Link>
               </div>
               {data.length === 0 ? (
