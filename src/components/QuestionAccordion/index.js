@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Accordion, List, Icon, Button, Label } from 'semantic-ui-react'
+import { CategoryList } from '../Manage/CategoryList'
 
 export default ({ name, type, choices = null, categories }) => {
   const [active, setActive] = useState(false)
@@ -13,15 +14,7 @@ export default ({ name, type, choices = null, categories }) => {
         <div>
           {type === 'OBJECTIVE' && <Icon name='dropdown' />}
           {name}
-          {categories.length > 0 && (
-            <div className='ml-2 mt-1'>
-              {categories.map(({ label, backgroundColor, color }, index) => (
-                <Label index={index} tag>
-                  {label}
-                </Label>
-              ))}
-            </div>
-          )}
+          <CategoryList categories={categories} />
         </div>
         <div>
           <Button icon>
