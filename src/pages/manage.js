@@ -5,19 +5,11 @@ import {
   Accordion,
   Search,
 } from 'semantic-ui-react'
-import styled from '@emotion/styled'
 import { Empty } from 'antd'
 import { Link } from 'react-router-dom'
 import ManageNavigation from '../components/Manage/ManageNavigation'
 import { CallToActionButton } from '../elements/CallToActionButton'
-
-const Title = styled.h2`
-  font-size: 24px;
-  display: inline-block;
-  margin: 0;
-`
-
-
+import { SegmentTitle } from '../elements/SegmentTitle'
 
 const data = [
   {
@@ -82,7 +74,7 @@ export default () => (
           <div className='row'>
             <div className='col-9'>
               <div className='d-flex justify-content-between align-items-center mb-4'>
-                <Title>จัดการคำถาม</Title>
+                <SegmentTitle>จัดการคำถาม</SegmentTitle>
                 <Link to='/manage/question/create'>
                   <CallToActionButton content='+ สร้างคำถาม' />
                 </Link>
