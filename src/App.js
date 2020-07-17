@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
+import Navbar from './components/Navbar'
+import ManagePage from './pages/manage'
+import CreateQuestionPage from './pages/createQuestion'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <React.Fragment>
+      <Router>
+        <Navbar />
+        <div className='container mt-5'>
+          <Switch>
+            <Route path='/manage' exact component={ManagePage} />
+            <Route
+              path='/manage/question/create'
+              component={CreateQuestionPage}
+            />
+            <Route path='/'>ดีงัฟฟ</Route>
+          </Switch>
+        </div>
+      </Router>
+    </React.Fragment>
+  )
 }
 
-export default App;
+export default App
