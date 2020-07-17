@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { color } from '../../constants'
+import { Link } from 'react-router-dom'
 
 const Button = styled.button`
   background-color: ${color.orange};
@@ -10,7 +11,7 @@ const Button = styled.button`
   border-radius: 4px;
   padding: 7px 9px;
 `
-const NavItem = styled.a`
+const NavItem = styled(Link)`
   margin: 0 10px;
   padding: 5px 0;
   color: ${color.darkGrey};
@@ -34,9 +35,9 @@ export default () => (
       </button>
       <div className='collapse navbar-collapse' id='navMenu'>
         <div className='navbar-nav ml-auto flex align-items-center'>
-          <NavItem href='#'>แดชบอร์ด</NavItem>
+          <NavItem to='/'>แดชบอร์ด</NavItem>
           <NavItem href='#'>รีพอร์ท</NavItem>
-          <NavItem href='#'>
+          <NavItem to='/manage'>
             <Button>สร้างชุดคำถาม</Button>
           </NavItem>
         </div>

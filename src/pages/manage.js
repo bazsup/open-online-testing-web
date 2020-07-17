@@ -10,6 +10,7 @@ import {
 import styled from '@emotion/styled'
 import { Empty } from 'antd'
 import { color } from '../constants'
+import { Link } from 'react-router-dom'
 
 const Title = styled.h2`
   font-size: 24px;
@@ -89,7 +90,9 @@ export default () => (
             <div className='col-9'>
               <div className='d-flex justify-content-between align-items-center mb-4'>
                 <Title>จัดการคำถาม</Title>
-                <Button content='+ สร้างคำถาม' />
+                <Link to='/manage/question/create'>
+                  <Button content='+ สร้างคำถาม' />
+                </Link>
               </div>
               {data.length === 0 ? (
                 <Segment>
