@@ -6,8 +6,8 @@ import {
   Input,
   Label,
   Button,
-  Radio as SemanticRadio,
   Dropdown as UnstyledDropdown,
+  Checkbox,
 } from 'semantic-ui-react'
 import { Radio } from 'antd'
 import styled from '@emotion/styled'
@@ -65,15 +65,28 @@ export default () => {
 
   const [type, setType] = useState(QUESTIONTYPE.OBJECTIVE)
   const [categories, setCategories] = useState([])
-  const [correctChoice, setCorrectChoice] = useState(1)
+  const [correctChoice, setCorrectChoice] = useState([
+    false,
+    false,
+    false,
+    false,
+  ])
+
+  const handleOnCheckboxChange = (_, { value }) => {
+    correctChoice[value - 1] = !correctChoice[value - 1]
+    setCorrectChoice(correctChoice)
+  }
 
   const onSubmit = (data) => {
     if (type === QUESTIONTYPE.OBJECTIVE) {
       data.choices.map((choice, index) => {
-        choice.isCorrectAnswer = correctChoice === index + 1
+        choice.isCorrectAnswer = correctChoice[index]
       })
     }
     data.categories = categories
+
+    console.log('data', data)
+    //เอา data ไปยิง api ไดเลย
   }
 
   return (
@@ -116,32 +129,28 @@ export default () => {
             <Form.Group inline>
               <label>ชอยซ์ทีถูก</label>
               <Form.Field
-                control={SemanticRadio}
+                control={Checkbox}
                 label='1'
                 value={1}
-                checked={correctChoice === 1}
-                onChange={(_, { value }) => setCorrectChoice(value)}
+                onChange={handleOnCheckboxChange}
               />
               <Form.Field
-                control={SemanticRadio}
+                control={Checkbox}
                 label='2'
                 value={2}
-                checked={correctChoice === 2}
-                onChange={(_, { value }) => setCorrectChoice(value)}
+                onChange={handleOnCheckboxChange}
               />
               <Form.Field
-                control={SemanticRadio}
+                control={Checkbox}
                 label='3'
                 value={3}
-                checked={correctChoice === 3}
-                onChange={(_, { value }) => setCorrectChoice(value)}
+                onChange={handleOnCheckboxChange}
               />
               <Form.Field
-                control={SemanticRadio}
+                control={Checkbox}
                 label='4'
                 value={4}
-                checked={correctChoice === 4}
-                onChange={(_, { value }) => setCorrectChoice(value)}
+                onChange={handleOnCheckboxChange}
               />
             </Form.Group>
           )}
