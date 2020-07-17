@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { color } from '../../constants'
 
-const TypeSelector = styled.div`
+const TypeSelector = styled(Link)`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -16,6 +17,11 @@ const TypeSelector = styled.div`
   height: 120px;
   margin: 0 20px 10px 20px;
   width: 300px;
+
+  text-decoration: none;
+  &:hover {
+    color: ${(props) => (props.active ? 'white' : color.darkGrey)};
+  }
 `
 
 const Icon = styled.span`
@@ -23,8 +29,8 @@ const Icon = styled.span`
   margin-bottom: 5px;
 `
 
-export default ({ icon: iconName, label, active = false }) => (
-  <TypeSelector active={active}>
+export default ({ to, icon: iconName, label, active = false }) => (
+  <TypeSelector active={active} to={to}>
     <Icon className={`icon-${iconName}`} />
     {label}
   </TypeSelector>

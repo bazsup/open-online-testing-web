@@ -1,5 +1,4 @@
 import React from 'react'
-import TypeSelector from '../components/TypeSelector'
 import QuestionAccordion from '../components/QuestionAccordion'
 import {
   Segment,
@@ -11,6 +10,7 @@ import styled from '@emotion/styled'
 import { Empty } from 'antd'
 import { color } from '../constants'
 import { Link } from 'react-router-dom'
+import ManageNavigation from '../components/Manage/ManageNavigation'
 
 const Title = styled.h2`
   font-size: 24px;
@@ -79,10 +79,7 @@ const data = [
 
 export default () => (
   <React.Fragment>
-    <div className='d-flex justify-content-center'>
-      <TypeSelector label='จัดการคำถาม' icon='question' active />
-      <TypeSelector label='จัดการข้อสอบ' icon='exam' />
-    </div>
+    <ManageNavigation />
     <div className='row justify-content-md-center mt-3'>
       <div className='col-10'>
         <Segment className='px-5 py-5'>
