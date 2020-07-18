@@ -36,7 +36,7 @@ const ExamCreatePage = (props) => {
     exam.questions = selectedQuestions
     ExamService.create(exam)
       .then(() => {
-        alert('exam created')
+        alert('สร้างข้อสอบสำเร็จ')
         changeToManageExamPage()
       })
   }
