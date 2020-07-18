@@ -12,6 +12,7 @@ import {
 import { Radio } from 'antd'
 import styled from '@emotion/styled'
 import { color } from '../constants'
+import * as questionService from '../services/question'
 
 const Dropdown = styled(UnstyledDropdown)`
   .ui.label {
@@ -83,10 +84,17 @@ export default () => {
         choice.isCorrectAnswer = correctChoice[index]
       })
     }
-    data.categories = categories
 
-    console.log('data', data)
-    //เอา data ไปยิง api ไดเลย
+    data.categories = categories
+    data.type = type
+
+    questionService
+      .createQuestion(data)
+      .then(() => alert('สร้างคำถามสำเร็จ'))
+      .catch((e) => {
+        alert('สร้างคำถามไม่สำเร็จ')
+        console.log('error', e)
+      })
   }
 
   return (
@@ -98,7 +106,7 @@ export default () => {
             <label>คำถาม</label>
             <input
               placeholder=''
-              name='questionName'
+              name='name'
               ref={register({ required: true })}
               required
             />
