@@ -38,10 +38,8 @@ const createArray = (length) => {
   return Array.from({ length }, (_, k) => k + 1)
 }
 
-const getChoiceField = (register) => {
-  const choicesAmount = 4
-
-  return createArray(choicesAmount).map((choiceNumber, index) => (
+const getChoiceField = (choiceAmount, register) => {
+  return createArray(choiceAmount).map((choiceNumber, index) => (
     <Form.Field index={index}>
       <Input labelPosition='left' type='text'>
         <Label basic>{choiceNumber}</Label>
@@ -63,10 +61,10 @@ const renderLabel = (label) => ({
 
 export default () => {
   const { register, handleSubmit } = useForm()
-
+  const [choiceAmount, setChoiceAmount] = useState(4)
   const [type, setType] = useState(QUESTIONTYPE.OBJECTIVE)
   const [categories, setCategories] = useState([])
-  const [correctChoice, setCorrectChoice] = useState([
+  const [correctChoices, setCorrectChoices] = useState([
     false,
     false,
     false,
@@ -74,14 +72,25 @@ export default () => {
   ])
 
   const handleOnCheckboxChange = (_, { value }) => {
-    correctChoice[value - 1] = !correctChoice[value - 1]
-    setCorrectChoice(correctChoice)
+    correctChoices[value - 1] = !correctChoices[value - 1]
+    setCorrectChoices(correctChoices)
+  }
+
+  const handleChoiceAmountChange = (action) => {
+    if (action === 'minus' && choiceAmount - 1 >= 2) {
+      setChoiceAmount(choiceAmount - 1)
+      setCorrectChoices(correctChoices.splice(0, choiceAmount - 1))
+    }
+    if (action === 'plus') {
+      setChoiceAmount(choiceAmount + 1)
+      setCorrectChoices(correctChoices.concat([false]))
+    }
   }
 
   const onSubmit = (data) => {
     if (type === QUESTIONTYPE.OBJECTIVE) {
       data.choices.forEach((choice, index) => {
-        choice.isCorrectAnswer = correctChoice[index]
+        choice.isCorrectAnswer = correctChoices[index]
       })
     }
 
@@ -102,13 +111,12 @@ export default () => {
       <h1>สร้างคำถาม</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Segment>
-          <Form.Field>
+          <Form.Field required>
             <label>คำถาม</label>
             <input
               placeholder=''
               name='name'
               ref={register({ required: true })}
-              required
             />
           </Form.Field>
           <Form.Field>
@@ -132,34 +140,32 @@ export default () => {
               </RadioButton>
             </Radio.Group>
           </Form.Field>
-          {type === QUESTIONTYPE.OBJECTIVE && getChoiceField(register)}
+
+          {type === QUESTIONTYPE.OBJECTIVE &&
+            getChoiceField(choiceAmount, register)}
+          {type === QUESTIONTYPE.OBJECTIVE && (
+            <Button.Group size='mini' className='mb-2'>
+              <Button
+                icon='plus'
+                onClick={() => handleChoiceAmountChange('plus')}
+              />
+              <Button
+                icon='minus'
+                onClick={() => handleChoiceAmountChange('minus')}
+              />
+            </Button.Group>
+          )}
           {type === QUESTIONTYPE.OBJECTIVE && (
             <Form.Group inline>
               <label>ชอยซ์ทีถูก</label>
-              <Form.Field
-                control={Checkbox}
-                label='1'
-                value={1}
-                onChange={handleOnCheckboxChange}
-              />
-              <Form.Field
-                control={Checkbox}
-                label='2'
-                value={2}
-                onChange={handleOnCheckboxChange}
-              />
-              <Form.Field
-                control={Checkbox}
-                label='3'
-                value={3}
-                onChange={handleOnCheckboxChange}
-              />
-              <Form.Field
-                control={Checkbox}
-                label='4'
-                value={4}
-                onChange={handleOnCheckboxChange}
-              />
+              {correctChoices.map((_, index) => (
+                <Form.Field
+                  control={Checkbox}
+                  label={`${index + 1}`}
+                  value={index + 1}
+                  onChange={handleOnCheckboxChange}
+                />
+              ))}
             </Form.Group>
           )}
           <Dropdown
