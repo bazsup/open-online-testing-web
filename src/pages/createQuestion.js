@@ -80,7 +80,7 @@ export default () => {
 
   const onSubmit = (data) => {
     if (type === QUESTIONTYPE.OBJECTIVE) {
-      data.choices.map((choice, index) => {
+      data.choices.forEach((choice, index) => {
         choice.isCorrectAnswer = correctChoice[index]
       })
     }

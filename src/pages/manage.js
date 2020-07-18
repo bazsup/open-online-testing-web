@@ -8,60 +8,6 @@ import { CallToActionButton } from '../elements/CallToActionButton'
 import { SegmentTitle } from '../elements/SegmentTitle'
 import * as questionService from '../services/question'
 
-const data = [
-  {
-    id: 1,
-    name: 'If you have 20 harems, what place that you must go?',
-    type: 'OBJECTIVE',
-    choices: [
-      {
-        id: 1,
-        label: 'Berlin',
-        isCorrectAnswer: false,
-      },
-      {
-        id: 2,
-        label: 'Leipzig',
-        isCorrectAnswer: false,
-      },
-      {
-        id: 3,
-        label: 'Munich',
-        isCorrectAnswer: true,
-      },
-      {
-        id: 4,
-        label: 'Zurich',
-        isCorrectAnswer: false,
-      },
-    ],
-    categories: [
-      {
-        label: 'history',
-        backgroundColor: '#2d2a4a',
-        color: '#ffffff',
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Why 1+1 = 10 in your opinion?',
-    type: 'SUBJECTIVE',
-    categories: [
-      {
-        label: 'computer',
-        backgroundColor: '#2d2a4a',
-        color: '#ffffff',
-      },
-      {
-        label: 'math',
-        backgroundColor: '#000000',
-        color: '#ffffff',
-      },
-    ],
-  },
-]
-
 export default () => {
   const [questions, setQuestions] = useState([])
 
