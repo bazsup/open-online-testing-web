@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import styled from '@emotion/styled'
 import { useForm } from "react-hook-form";
 import { Form, Segment, Menu, Label, Search } from "semantic-ui-react";
+
+import * as QuestionService from '../services/question'
+import * as ExamService from '../services/exam'
+
 import { PrimaryButton } from "../elements/PrimaryButton";
 import { useCallback } from "react";
 import { Empty } from "antd";
@@ -11,62 +15,30 @@ const ScrollablePane = styled.div`
   overflow-y: scroll;
 `
 
-const questionList = [
-  {
-    "id": "5f0cb92ac72c830800e0ef80",
-    "name": "If you have 20 harems, what place that you must go?",
-    "type": "OBJECTIVE",
-    "attributes": null,
-    "choices": [
-      {
-        "label": "Berlin",
-        "isCorrectAnswer": false
-      },
-      {
-        "label": "Leipzig",
-        "isCorrectAnswer": false
-      },
-      {
-        "label": "Munich",
-        "isCorrectAnswer": true
-      },
-      {
-        "label": "Zurich",
-        "isCorrectAnswer": false
-      }
-    ]
-  },
-  {
-    "id": "2",
-    "name": "Why 1+1 = 10 in your opinion?",
-    "type": "SUBJECTIVE"
-  },
-  {
-    "id": "3",
-    "name": "Why 2+2 = 4 in your opinion?",
-    "type": "SUBJECTIVE"
-  }
-]
-
-const getQuestions = () => {
-  const otherQuestions = Array(20).fill(null).map((_, index) => {
-    return {
-      ...questionList[2],
-      id: questionList[2].id + index + 1,
-      name: questionList[2].name + ' ' + (index + 1)
-    }
-  })
-  return questionList.concat(otherQuestions)
-}
-
-const ExamCreatePage = () => {
+const ExamCreatePage = (props) => {
   const [selectedQuestions, setSelectedQuestions] = useState([])
   const [questions, setQuestions] = useState([])
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const result = await QuestionService.getAll()
+      setQuestions(result.data)
+    }
+    fetchQuestions()
+  }, [])
+
+  const changeToManageExamPage = () => {
+    props.history.push('/manage/exam')
+  }
 
   const { register, handleSubmit } = useForm()
   const onSubmit = (exam) => {
     exam.questions = selectedQuestions
-    console.log(exam)
+    ExamService.create(exam)
+      .then(() => {
+        alert('exam created')
+        changeToManageExamPage()
+      })
   }
   const handleAddSelectedQuestion = useCallback((item, index) => {
     setQuestions(questions.filter(question => question.id !== item.id))
@@ -77,10 +49,6 @@ const ExamCreatePage = () => {
     setSelectedQuestions(selectedQuestions.filter(question => question.id !== item.id))
     setQuestions([...questions, item])
   }, [selectedQuestions, setSelectedQuestions, setQuestions, questions])
-
-  useEffect(() => {
-    setQuestions(getQuestions())
-  }, [])
 
   return (
     <React.Fragment>
@@ -109,18 +77,18 @@ const ExamCreatePage = () => {
             <Segment>
               <div className="row">
                 <ScrollableQuestionList
-                  title={`คำถามที่ถูกเลือก`}
-                  questions={selectedQuestions}
-                  handleSearch={() => {}}
-                  handleItemClick={handleRemoveSelectedQuestion} 
-                  icon={<Label color='red'>-</Label>}
-                />
-                <ScrollableQuestionList
                   title={`คำถามที่เลือกได้`}
                   questions={questions}
                   handleSearch={() => {}}
                   handleItemClick={handleAddSelectedQuestion} 
                   icon={<Label color='teal'>+</Label>}
+                />
+                <ScrollableQuestionList
+                  title={`คำถามที่ถูกเลือก`}
+                  questions={selectedQuestions}
+                  handleSearch={() => {}}
+                  handleItemClick={handleRemoveSelectedQuestion} 
+                  icon={<Label color='red'>-</Label>}
                 />
               </div>
             </Segment>
