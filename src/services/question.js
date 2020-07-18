@@ -5,5 +5,5 @@ export const getAll = () => {
 }
 
 export const createQuestion = (question) => {
-  return api.post('/questions', question)
+  return api.post('/question', question)
 }
