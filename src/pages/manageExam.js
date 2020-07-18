@@ -1,97 +1,27 @@
 import React from 'react'
-import ManageNavigation from '../components/Manage/ManageNavigation'
 import { Segment, Accordion } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { Empty } from 'antd'
+
+import * as ExamService from '../services/exam'
+
+import ManageNavigation from '../components/Manage/ManageNavigation'
 import { SegmentTitle } from '../elements/SegmentTitle'
 import { CallToActionButton } from '../elements/CallToActionButton'
 import ExamAccordion from '../components/ManageExam/ExamAccordion'
-
-const exams = [
-  {
-    id: 1,
-    "name": "ข้อสอบเพิ่มความรู้ชุดที่ 1",
-    "description": "set A 1",
-    "questions": [
-      {
-        "id": "5f0cb92ac72c830800e0ef80",
-        "name": "If you have 20 harems, what place that you must go?",
-        "type": "OBJECTIVE",
-        "attributes": null,
-        "choices": [
-          {
-            "label": "Berlin",
-            "isCorrectAnswer": false
-          },
-          {
-            "label": "Leipzig",
-            "isCorrectAnswer": false
-          },
-          {
-            "label": "Munich",
-            "isCorrectAnswer": true
-          },
-          {
-            "label": "Zurich",
-            "isCorrectAnswer": false
-          }
-        ]
-      }
-    ],
-    categories: [
-      {
-        label: 'computer',
-        backgroundColor: '#2d2a4a',
-        color: '#ffffff',
-      },
-      {
-        label: 'math',
-        backgroundColor: '#000000',
-        color: '#ffffff',
-      },
-    ]
-  },
-  {
-    id: 2,
-    "name": "ข้อสอบเพิ่มความรู้ชุดที่ 2",
-    "description": "set B 1",
-    "questions": [
-      {
-        "id": "5f0cb92ac72c830800e0ef80",
-        "name": "If you have 20 harems, what place that you must go?",
-        "type": "OBJECTIVE",
-        "attributes": null,
-        "choices": [
-          {
-            "label": "Berlin",
-            "isCorrectAnswer": false
-          },
-          {
-            "label": "Leipzig",
-            "isCorrectAnswer": false
-          },
-          {
-            "label": "Munich",
-            "isCorrectAnswer": true
-          },
-          {
-            "label": "Zurich",
-            "isCorrectAnswer": false
-          }
-        ]
-      }
-    ],
-    categories: [
-      {
-        label: 'programming',
-        backgroundColor: '#2d2a4a',
-        color: '#ffffff',
-      },
-    ]
-  }
-]
+import { useEffect } from 'react'
+import { useState } from 'react'
 
 const ExamList = () => {
+  const [exams, setExams] = useState([])
+
+  useEffect(() => {
+    const fetchExams = async () => {
+      const result = await ExamService.getAll()
+      setExams(result.data)
+    }
+    fetchExams()
+  }, [])
   return (
     <React.Fragment>
       <ManageNavigation />

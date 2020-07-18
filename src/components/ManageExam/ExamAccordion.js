@@ -12,7 +12,7 @@ const useToggle = (initial = false) => {
   return [active, toggleActive]
 }
 
-export default ({ name, description, questions, categories }) => {
+export default ({ name, description, questions  }) => {
   const [active, toggleActive] = useToggle(false)
   return (
     <React.Fragment>
@@ -31,7 +31,6 @@ export default ({ name, description, questions, categories }) => {
           <div>
             {`จำนวนคำถาม: ${questions.length}`}
           </div>
-          <CategoryList categories={categories} />
         </div>
         <div>
           <Button icon disabled>
