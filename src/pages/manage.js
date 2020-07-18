@@ -1,27 +1,15 @@
 import React from 'react'
-import TypeSelector from '../components/TypeSelector'
 import QuestionAccordion from '../components/QuestionAccordion'
 import {
   Segment,
-  Button as UnstyleButton,
   Accordion,
   Search,
 } from 'semantic-ui-react'
-import styled from '@emotion/styled'
 import { Empty } from 'antd'
-import { color } from '../constants'
 import { Link } from 'react-router-dom'
-
-const Title = styled.h2`
-  font-size: 24px;
-  display: inline-block;
-  margin: 0;
-`
-
-const Button = styled(UnstyleButton)`
-  background-color: ${color.purple} !important;
-  color: white !important;
-`
+import ManageNavigation from '../components/Manage/ManageNavigation'
+import { CallToActionButton } from '../elements/CallToActionButton'
+import { SegmentTitle } from '../elements/SegmentTitle'
 
 const data = [
   {
@@ -79,19 +67,16 @@ const data = [
 
 export default () => (
   <React.Fragment>
-    <div className='d-flex justify-content-center'>
-      <TypeSelector label='จัดการคำถาม' icon='question' active />
-      <TypeSelector label='จัดการข้อสอบ' icon='exam' />
-    </div>
+    <ManageNavigation />
     <div className='row justify-content-md-center mt-3'>
       <div className='col-10'>
         <Segment className='px-5 py-5'>
           <div className='row'>
-            <div className='col-9'>
+            <div className='col-12'>
               <div className='d-flex justify-content-between align-items-center mb-4'>
-                <Title>จัดการคำถาม</Title>
+                <SegmentTitle>จัดการคำถาม</SegmentTitle>
                 <Link to='/manage/question/create'>
-                  <Button content='+ สร้างคำถาม' />
+                  <CallToActionButton content='+ สร้างคำถาม' />
                 </Link>
               </div>
               {data.length === 0 ? (
