@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "@emotion/styled"
 import { darken } from "../../tools/colorConverter"
 import { Form } from "semantic-ui-react"
@@ -37,6 +37,43 @@ const LabelItem = styled.a`
   transition: background 0.1s ease;
   font-weight: 700;
   line-height: 1;
+
+  &.category-input {
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+  }
+`
+
+const ColorTag = styled.a`
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: ${props => props.color};
+  border: 1px solid gray;
+`
+
+const ColorGroup = styled.div`
+  position: absolute;
+  display: inline-block;
+  background: white;
+  border-radius: 5px;
+  padding: 2px 2px 0px 4px;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  top: -40px;
+  left: 0;
+  width: 98px;
+  a {
+    margin-right: 4px;
+  }
+`
+
+const Input = styled.input`
+  padding: 0px;
+  display: inline !important;
+  width: 100px !important;
+  margin-left: 3px !important;
+  border: none !important;
 `
 
 const useMultipleState = () => {
@@ -58,11 +95,36 @@ const useMultipleState = () => {
   return [multi, add, remove]
 }
 
-const CreateCategory = ({ onCategoriesChange }) => {
+const colors = [
+  '#0d6efd',
+  '#6610f2',
+  '#6f42c1',
+  '#d63384',
+  '#dc3545',
+  '#fd7e14',
+  '#ffc107',
+  '#28a745',
+  '#20c997',
+  '#17a2b8'
+]
+
+const CreateCategory = ({ title, onCategoriesChange }) => {
   const [categories, addCategory, removeCategory] = useMultipleState([])
+  const [showColorPicker, setShowColorPicker] = useState(false)
 
   const [label, setLabel] = useState('')
   const [backgroundColor, setBackgroundColor] = useState("#f2711c")
+
+
+  const handleChangeColor = (color) => {
+    setBackgroundColor(color)
+    toggleColorPicker()
+  }
+
+  const toggleColorPicker = () => {
+    setShowColorPicker(!showColorPicker)
+  }
+
   const handleLabelKeyPress = (event) => {
     if (event.key === "Enter") {
       event.preventDefault()
@@ -77,31 +139,22 @@ const CreateCategory = ({ onCategoriesChange }) => {
       color: "#ffffff",
     }
     addCategory(category)
-    onCategoriesChange(categories)
   }
 
    const handleRemoveCategory = (index) => {
     removeCategory(index)
+  }
+  
+  useEffect(() => {
     onCategoriesChange(categories)
-   }
+   }, [categories, onCategoriesChange])
 
   return (
     <div>
       <Form.Field>
-        <label htmlFor="name">ชื่อประเภท</label>
-        <input
-          type="text"
-          name="ตั้งชื่อประเภทคำถาม"
-          value={label}
-          onChange={(event) => {
-            setLabel(event.target.value)
-          }}
-          onKeyPress={handleLabelKeyPress}
-        />
-      </Form.Field>
-      <Box>
+        <label>{title}</label>
         {categories.map((category, index) => (
-          <LabelItem className="ui label" backgroundColor="#f2711c" key={index}>
+          <LabelItem className="ui label" backgroundColor={category.backgroundColor} key={index}>
             {category.label}
             <i
               aria-hidden="true"
@@ -110,7 +163,31 @@ const CreateCategory = ({ onCategoriesChange }) => {
             ></i>
           </LabelItem>
         ))}
-      </Box>
+        <LabelItem as="div" backgroundColor="#fff" className="category-input">
+          <div className='d-inline-block position-relative'>
+            <ColorTag color={backgroundColor} onClick={toggleColorPicker} />
+            {showColorPicker && (
+              <ColorGroup>
+                {
+                  colors.map(color => (
+                    <ColorTag color={color} key={color} onClick={() => handleChangeColor(color)} />
+                  ))
+                }
+              </ColorGroup>
+            )}
+          </div>
+          <Input
+            type="text"
+            placeholder="ชื่อประเภท"
+            style={{ padding: 0 }}
+            value={label}
+            onChange={(event) => {
+              setLabel(event.target.value)
+            }}
+            onKeyPress={handleLabelKeyPress}
+          />
+        </LabelItem>
+      </Form.Field>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   Segment,
@@ -14,12 +14,6 @@ import styled from '@emotion/styled'
 import { color } from '../constants'
 import * as questionService from '../services/question'
 import CreateCategory from '../components/Manage/CreateCategory'
-
-const Dropdown = styled(UnstyledDropdown)`
-  .ui.label {
-    text-decoration: none;
-  }
-`
 
 const RadioButton = styled(Radio.Button)`
   background-color: ${(props) => props.active && color.orange} !important;
@@ -55,12 +49,6 @@ const getChoiceField = (register) => {
   ))
 }
 
-const options = [{ key: 1, text: 'History', value: 'History' }]
-
-const renderLabel = (label) => ({
-  color: 'orange',
-  content: label.text,
-})
 
 export default () => {
   const { register, handleSubmit } = useForm()
@@ -79,9 +67,9 @@ export default () => {
     setCorrectChoice(correctChoice)
   }
 
-  const handleCategoriesChange = (categories) => {
+  const handleCategoriesChange = useCallback((categories) => {
     setCategories(categories)
-  }
+  }, [setCategories])
   const onSubmit = (data) => {
     if (type === QUESTIONTYPE.OBJECTIVE) {
       data.choices.map((choice, index) => {
@@ -166,7 +154,7 @@ export default () => {
               />
             </Form.Group>
           )}
-          <CreateCategory onCategoriesChange={handleCategoriesChange} />
+          <CreateCategory title={'ประเภทของคำถาม'} onCategoriesChange={handleCategoriesChange} />
           <Button color='orange' className='mt-3'>
             สร้างคำถาม
           </Button>
