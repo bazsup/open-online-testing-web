@@ -13,6 +13,7 @@ import { Radio } from 'antd'
 import styled from '@emotion/styled'
 import { color } from '../constants'
 import * as questionService from '../services/question'
+import CreateCategory from '../components/Manage/CreateCategory'
 
 const Dropdown = styled(UnstyledDropdown)`
   .ui.label {
@@ -78,6 +79,9 @@ export default () => {
     setCorrectChoice(correctChoice)
   }
 
+  const handleCategoriesChange = (categories) => {
+    setCategories(categories)
+  }
   const onSubmit = (data) => {
     if (type === QUESTIONTYPE.OBJECTIVE) {
       data.choices.map((choice, index) => {
@@ -162,16 +166,7 @@ export default () => {
               />
             </Form.Group>
           )}
-          <Dropdown
-            multiple
-            selection
-            name='categories'
-            fluid
-            options={options}
-            placeholder='เลือกประเภทของคำถาม'
-            renderLabel={renderLabel}
-            onChange={(_, { value }) => setCategories(value)}
-          />
+          <CreateCategory onCategoriesChange={handleCategoriesChange} />
           <Button color='orange' className='mt-3'>
             สร้างคำถาม
           </Button>
