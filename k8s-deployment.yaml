@@ -32,7 +32,7 @@ spec:
           - name: static-content
             mountPath: /usr/share/nginx/html
           - name: nginx-conf
-            mountPath: /etc/nginx
+            mountPath: /etc/nginx/conf/conf.d
         image: AZ_CONTAINER_REGISTRY_URL/dev/depa-frontend:IMAGE_BUILD_ID
         readinessProbe:
           tcpSocket:
