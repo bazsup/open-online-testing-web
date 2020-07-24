@@ -6,8 +6,7 @@ export default ({
   choice,
   register,
   handleChoiceRemove,
-  setIsCorrectAnswerToTrue,
-  setIsCorrectAnswerToFalse,
+  setIsCorrectAnswerTo,
 }) => {
   return (
     <div className='d-flex my-3'>
@@ -28,14 +27,14 @@ export default ({
         <Button
           type='button'
           icon
-          onClick={() => setIsCorrectAnswerToFalse(index)}
+          onClick={() => setIsCorrectAnswerTo(false, index)}
         >
           <Icon name='times' />
         </Button>
         <Button
           type='button'
           icon
-          onClick={() => setIsCorrectAnswerToTrue(index)}
+          onClick={() => setIsCorrectAnswerTo(true, index)}
         >
           <Icon name='check' />
         </Button>

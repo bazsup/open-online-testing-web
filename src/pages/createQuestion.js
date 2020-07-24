@@ -6,11 +6,12 @@ import {
   Button,
   Dropdown as UnstyledDropdown,
 } from 'semantic-ui-react'
-import { Radio } from 'antd'
+import { Radio, message } from 'antd'
 import styled from '@emotion/styled'
 import { color } from '../constants'
 import * as questionService from '../services/question'
 import ObjectiveChoiceInput from '../components/ObjectiveChoiceInput'
+import { toast } from '../libs/toast'
 
 const Dropdown = styled(UnstyledDropdown)`
   .ui.label {
@@ -49,7 +50,7 @@ export default () => {
     control,
     setValue,
     getValues,
-    watch,
+    reset,
   } = useForm({
     defaultValues: {
       choices: [
@@ -66,23 +67,12 @@ export default () => {
     name: 'choices',
   })
 
-  const setIsCorrectAnswerToTrue = (index) => {
+  const setIsCorrectAnswerTo = (value, index) => {
     setValue(
       `choices`,
       fields.map((field, i) => {
         if (index === i) {
-          field.isCorrectAnswer = true
-        }
-      })
-    )
-  }
-
-  const setIsCorrectAnswerToFalse = (index) => {
-    setValue(
-      `choices`,
-      fields.map((field, i) => {
-        if (index === i) {
-          field.isCorrectAnswer = false
+          field.isCorrectAnswer = value
         }
       })
     )
@@ -106,13 +96,17 @@ export default () => {
 
     questionService
       .createQuestion(data)
-      .then(() => alert('สร้างคำถามสำเร็จ'))
-      .catch((e) => {
-        alert('สร้างคำถามไม่สำเร็จ')
-        console.log('error', e)
+      .then(() => {
+        toast.success('สร้างคำถามสำเร็จ')
+        reset()
+      })
+      .catch((error) => {
+        toast.error('สร้างคำถามไม่สำเร็จ กรุณาลองใหม่อีกครั้ง')
+        console.error('===Create Question Error===', error)
+        throw error
       })
   }
-  console.log('value', getValues())
+
   return (
     <React.Fragment>
       <h1>สร้างคำถาม</h1>
@@ -156,8 +150,7 @@ export default () => {
                 choice={choice}
                 register={register}
                 handleChoiceRemove={handleChoiceRemove}
-                setIsCorrectAnswerToTrue={setIsCorrectAnswerToTrue}
-                setIsCorrectAnswerToFalse={setIsCorrectAnswerToFalse}
+                setIsCorrectAnswerTo={setIsCorrectAnswerTo}
               />
             ))}
           {type === QUESTIONTYPE.OBJECTIVE && (
