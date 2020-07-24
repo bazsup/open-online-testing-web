@@ -72,6 +72,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo ==='
+                    sh "yarn add react-scripts"
                     sh 'yarn build'
                     // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
                     stash name: 'static-artifact', includes: 'build/'
