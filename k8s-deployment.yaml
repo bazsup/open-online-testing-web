@@ -23,6 +23,7 @@ spec:
         - name: static-content
           emptyDir: {}
         - name: nginx-conf
+          emptyDir: {}
       imagePullSecrets:
        - name: ntt-azure-registry
       containers:
