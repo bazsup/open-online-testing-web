@@ -8,11 +8,6 @@ pipeline {
         AZ_AKZ_USER = credentials('AZ_AKZ_USER')
         AZ_AKZ_PASSWORD = credentials('AZ_AKZ_PASSWORD')
         AZ_AKZ_TENANT = credentials('AZ_AKZ_TENANT')
-        MONGO_PASWORD = credentials('DEPA_MONGO_PASWORD')
-        FACEBOOK_ID = credentials('DEPA_FACEBOOK_ID')
-        FACEBOOK_SECRET = credentials('DEPA_FACEBOOK_SECRET')
-        GOOGLE_ID = credentials('DEPA_GOOGLE_ID')
-        GOOGLE_SECRET = credentials('DEPA_GOOGLE_SECRET')
         CONTAINER_IMAGE = 'dev/depa-frontend'
         AZ_AKS_NAME = "kube-devops"
         AZ_AKS_RESOUCE_GROUP = "Elasticsearch-Stack"
@@ -44,6 +39,7 @@ pipeline {
             steps {
                 script {
                     def git_tags = sh(script: 'git tag | sort -r', returnStdout: true)
+                    timeout(time: 30, unit: 'MINUTES') {
                     def input_params = input message: 'Tag Versioning',
                         parameters : [
                             choice(name: 'TAG_VERSION', choices: "${git_tags}", description: 'เลือก Tags ที่ต้องการ'),
@@ -52,6 +48,7 @@ pipeline {
                             booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value'),
                             password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
                         ]
+                    }
                     env.BUILD_ID = input_params.BUILD_ID
                     env.BUILD_BRANCH = ''
                     env.SERVER_ENVIRONMENT = input_params.SERVER_ENVIRONMENT
@@ -62,22 +59,21 @@ pipeline {
             }
         }
 
-        stage('Build Java Project') {
+        stage('Build Yarn Project') {
             // build ทดลองใส่ตัวแปรบิ้วตรงนี้
 
             agent {
                 docker {
-                    image 'maven:3.6.3-jdk-11'
-                    args '-v /root/.m2:/root/.m2'
+                    image 'node:alpine'
                 }
             }
 
             steps {
                 script {
                     sh 'echo ==='
-                    sh 'mvn -B -DskipTests clean package'
+                    sh 'yarn build'
                     // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-                    stash name: 'java-artifact', includes: '**/target/*.jar'
+                    stash name: 'static-artifact', includes: 'build/'
                 }
             }
         }
@@ -93,7 +89,8 @@ pipeline {
             steps {
                 script {
                     sh 'echo ============= Build Docker Image and Push ==================='
-                    unstash 'java-artifact'
+                    unstash 'static-artifact'
+                    sh "ls"
                     def FULL_CONTAINER_IMAGE_PATH = "${AZ_CONTAINER_REGISTRY_URL}/${CONTAINER_IMAGE}:${env.TAG_VERSION}"
                     env.FULL_CONTAINER_IMAGE_PATH = FULL_CONTAINER_IMAGE_PATH.replaceAll('/', "\\\\/")
                     docker.withRegistry("https://${AZ_CONTAINER_REGISTRY_URL}", '77ae6c02-d40b-4bae-82bf-ade4eeff03e3') {
@@ -122,7 +119,6 @@ pipeline {
             agent {
                 docker {
                     image 'mcr.microsoft.com/azure-cli:2.8.0'
-                    // args '-v ${HOME}:/home/az -e HOME=/home/az' 
                     args '--user root'
                 }
             }
@@ -147,7 +143,7 @@ pipeline {
                     // จะ Hold การ Auto Deploy เมื่อการบิ้วแล้วส่งไปยังเครื่องนั้นตรงกับชื่อเคร่องที่ Hold ไว้ (เพราะสำคัญห้าม Auto Deploy)
                     if ("${env.SERVER_ENVIRONMENT}" == "${PRODUCTION_SERVER}"){
                         // จะถามยืนยันก่อน Deploy ถ้าเป็น master build 
-                         timeout(time: 1, unit: 'HOURS') {
+                         timeout(time: 30, unit: 'MINUTES') {
                             input message: 'Approve Deploy to Production?', ok: 'Yes'
                         }
                         env.K8S_DEPLOY_YAML_PROFILE = "k8s-deployment-production.yaml"
