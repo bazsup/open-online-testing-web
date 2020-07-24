@@ -70,6 +70,7 @@ export default () => {
   const handleCategoriesChange = useCallback((categories) => {
     setCategories(categories)
   }, [setCategories])
+
   const onSubmit = (data) => {
     if (type === QUESTIONTYPE.OBJECTIVE) {
       data.choices.map((choice, index) => {
