@@ -19,10 +19,16 @@ spec:
         app: depa-frontend
         version: dev
     spec:
+      volumes:
+        - name: static-content
+          emptyDir: {}
       imagePullSecrets:
        - name: ntt-azure-registry
       containers:
       - name: depa-frontend
+        volumeMounts:
+          - name: static-content
+            mountPath: /usr/share/nginx/html
         image: AZ_CONTAINER_REGISTRY_URL/dev/depa-frontend:IMAGE_BUILD_ID
         readinessProbe:
           tcpSocket:
