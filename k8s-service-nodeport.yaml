@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: depa-frontend-service
+  labels:
+    app: depa-frontend
+    version: dev
+spec:
+  type: ClusterIP
+  selector:
+    app: depa-frontend
+    version: dev
+  ports:
+  - name: https
+    protocol: TCP
+    port: 80
+    targetPort: 80
+
