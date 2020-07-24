@@ -39,8 +39,9 @@ pipeline {
             steps {
                 script {
                     def git_tags = sh(script: 'git tag | sort -r', returnStdout: true)
+                    def input_params = null
                     timeout(time: 30, unit: 'MINUTES') {
-                    def input_params = input message: 'Tag Versioning',
+                        input_params = input message: 'Tag Versioning',
                         parameters : [
                             choice(name: 'TAG_VERSION', choices: "${git_tags}", description: 'เลือก Tags ที่ต้องการ'),
                             text(name: 'BUILD_ID', defaultValue:"${BUILD_ID}"),
