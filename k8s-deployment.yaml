@@ -8,7 +8,7 @@ metadata:
     app: depa-frontend
     version: dev
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: depa-frontend
@@ -35,7 +35,13 @@ spec:
             mountPath: /etc/nginx/conf.d
         image: AZ_CONTAINER_REGISTRY_URL/dev/depa-frontend:IMAGE_BUILD_ID
         readinessProbe:
-          tcpSocket:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
             port: 80
           initialDelaySeconds: 5
         env:

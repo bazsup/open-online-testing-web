@@ -11,7 +11,7 @@ spec:
     app: depa-frontend
     version: dev
   ports:
-  - name: https
+  - name: http
     protocol: TCP
     port: 80
     targetPort: 80
