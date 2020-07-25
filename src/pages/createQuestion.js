@@ -1,23 +1,17 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form'
 import {
   Segment,
   Form,
   Button,
-  Dropdown as UnstyledDropdown,
 } from 'semantic-ui-react'
-import { Radio, message } from 'antd'
+import { Radio } from 'antd'
 import styled from '@emotion/styled'
 import { color } from '../constants'
 import * as questionService from '../services/question'
+import CreateCategory from '../components/Manage/CreateCategory'
 import ObjectiveChoiceInput from '../components/ObjectiveChoiceInput'
 import { toast } from '../libs/toast'
-
-const Dropdown = styled(UnstyledDropdown)`
-  .ui.label {
-    text-decoration: none;
-  }
-`
 
 const RadioButton = styled(Radio.Button)`
   background-color: ${(props) => props.active && color.orange} !important;
@@ -33,12 +27,6 @@ const QUESTIONTYPE = {
   SUBJECTIVE: 'SUBJECTIVE',
 }
 
-const options = [{ key: 1, text: 'History', value: 'History' }]
-
-const renderLabel = (label) => ({
-  color: 'orange',
-  content: label.text,
-})
 
 export default () => {
   const [type, setType] = useState(QUESTIONTYPE.OBJECTIVE)
@@ -62,7 +50,7 @@ export default () => {
     },
   })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove: removeChoice } = useFieldArray({
     control,
     name: 'choices',
   })
@@ -78,12 +66,16 @@ export default () => {
     )
   }
 
+  const handleCategoriesChange = useCallback((categories) => {
+    setCategories(categories)
+  }, [setCategories])
+
   const handleChoiceRemove = (index) => {
     const choices = getValues().choices
     if (choices.length - 1 < 2) {
       return alert('จำนวนช้อยส์ต้องมากกว่า 2 จำนวนขึ้นไป')
     }
-    remove(index)
+    removeChoice(index)
   }
 
   const onSubmit = (data) => {
@@ -156,21 +148,13 @@ export default () => {
           {type === QUESTIONTYPE.OBJECTIVE && (
             <Button
               icon='plus'
+              type='button'
               size='tiny'
               className='mb-2'
               onClick={() => append({ label: '', isCorrectAnswer: false })}
             />
           )}
-          <Dropdown
-            multiple
-            selection
-            name='categories'
-            fluid
-            options={options}
-            placeholder='เลือกประเภทของคำถาม'
-            renderLabel={renderLabel}
-            onChange={(_, { value }) => setCategories(value)}
-          />
+          <CreateCategory title={'ประเภทของคำถาม'} onCategoriesChange={handleCategoriesChange} />
           <Button type='submit' color='orange' className='mt-3'>
             สร้างคำถาม
           </Button>
