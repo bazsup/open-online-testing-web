@@ -22,8 +22,8 @@ spec:
       volumes:
         - name: static-content
           emptyDir: {}
-        - name: nginx-conf
-          emptyDir: {}
+        # - name: nginx-conf
+        #   emptyDir: {}
       imagePullSecrets:
        - name: ntt-azure-registry
       containers:
@@ -31,8 +31,8 @@ spec:
         volumeMounts:
           - name: static-content
             mountPath: /usr/share/nginx/html
-          - name: nginx-conf
-            mountPath: /etc/nginx/conf.d
+          # - name: nginx-conf
+          #   mountPath: /etc/nginx/conf.d
         image: AZ_CONTAINER_REGISTRY_URL/dev/depa-frontend:IMAGE_BUILD_ID
         readinessProbe:
           httpGet:
