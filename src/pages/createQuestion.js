@@ -153,10 +153,9 @@ export default () => {
             ))}
           {type === QUESTIONTYPE.OBJECTIVE && (
             <Button
+              type='button'
               icon='plus'
-              type='button'
               size='tiny'
-              type='button'
               className='mb-2'
               onClick={() => append({ label: '', isCorrectAnswer: false })}
             />
