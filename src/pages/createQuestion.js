@@ -6,7 +6,6 @@ import {
   Input,
   Label,
   Button,
-  Dropdown as UnstyledDropdown,
   Checkbox,
 } from 'semantic-ui-react'
 import { Radio } from 'antd'
