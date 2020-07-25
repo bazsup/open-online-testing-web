@@ -10,6 +10,10 @@ const Button = styled.button`
   border: 0;
   border-radius: 4px;
   padding: 7px 9px;
+
+  &:focus {
+    outline: none;
+  }
 `
 const NavItem = styled(Link)`
   margin: 0 10px;
@@ -22,9 +26,9 @@ const NavItem = styled(Link)`
 export default () => (
   <nav className='navbar navbar-expand-lg navbar-light bg-light'>
     <div className='container'>
-      <a className='navbar-brand' href='#'>
+      <Link className='navbar-brand' to='/'>
         ดีป้าล่ะ
-      </a>
+      </Link>
       <button
         className='navbar-toggler'
         type='button'

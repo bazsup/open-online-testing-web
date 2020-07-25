@@ -1,18 +1,17 @@
 import React, { useCallback, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 import {
   Segment,
   Form,
-  Input,
-  Label,
   Button,
-  Checkbox,
 } from 'semantic-ui-react'
 import { Radio } from 'antd'
 import styled from '@emotion/styled'
 import { color } from '../constants'
 import * as questionService from '../services/question'
 import CreateCategory from '../components/Manage/CreateCategory'
+import ObjectiveChoiceInput from '../components/ObjectiveChoiceInput'
+import { toast } from '../libs/toast'
 
 const RadioButton = styled(Radio.Button)`
   background-color: ${(props) => props.active && color.orange} !important;
@@ -28,64 +27,75 @@ const QUESTIONTYPE = {
   SUBJECTIVE: 'SUBJECTIVE',
 }
 
-const createArray = (length) => {
-  return Array.from({ length }, (_, k) => k + 1)
-}
-
-const getChoiceField = (register) => {
-  const choicesAmount = 4
-
-  return createArray(choicesAmount).map((choiceNumber, index) => (
-    <Form.Field index={index}>
-      <Input labelPosition='left' type='text'>
-        <Label basic>{choiceNumber}</Label>
-        <input
-          name={`choices[${index}].label`}
-          ref={register({ required: true })}
-        />
-      </Input>
-    </Form.Field>
-  ))
-}
-
 
 export default () => {
-  const { register, handleSubmit } = useForm()
-
   const [type, setType] = useState(QUESTIONTYPE.OBJECTIVE)
   const [categories, setCategories] = useState([])
-  const [correctChoice, setCorrectChoice] = useState([
-    false,
-    false,
-    false,
-    false,
-  ])
 
-  const handleOnCheckboxChange = (_, { value }) => {
-    correctChoice[value - 1] = !correctChoice[value - 1]
-    setCorrectChoice(correctChoice)
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    getValues,
+    reset,
+  } = useForm({
+    defaultValues: {
+      choices: [
+        { label: '', isCorrectAnswer: false },
+        { label: '', isCorrectAnswer: false },
+        { label: '', isCorrectAnswer: false },
+        { label: '', isCorrectAnswer: false },
+      ],
+    },
+  })
+
+  const { fields, append, remove: removeChoice } = useFieldArray({
+    control,
+    name: 'choices',
+  })
+
+  const setIsCorrectAnswerTo = (value, index) => {
+    setValue(
+      `choices`,
+      fields.map((field, i) => {
+        if (index === i) {
+          field.isCorrectAnswer = value
+        }
+      })
+    )
   }
 
   const handleCategoriesChange = useCallback((categories) => {
     setCategories(categories)
   }, [setCategories])
 
-  const onSubmit = (data) => {
-    if (type === QUESTIONTYPE.OBJECTIVE) {
-      data.choices.map((choice, index) => {
-        choice.isCorrectAnswer = correctChoice[index]
-      })
+  const handleChoiceRemove = (index) => {
+    const choices = getValues().choices
+    if (choices.length - 1 < 2) {
+      return alert('จำนวนช้อยส์ต้องมากกว่า 2 จำนวนขึ้นไป')
     }
+    removeChoice(index)
+  }
 
+  const onSubmit = (data) => {
     data.categories = categories
     data.type = type
+    data.choices.map(
+      (choice, index) =>
+        (choice.isCorrectAnswer = fields[index].isCorrectAnswer)
+    )
 
     questionService
       .createQuestion(data)
-      .then(() => alert('สร้างคำถามสำเร็จ'))
-      .catch((e) => {
-        alert('สร้างคำถามไม่สำเร็จ')
-        console.log('error', e)
+      .then(() => {
+        toast.success('สร้างคำถามสำเร็จ')
+        reset()
+      })
+      .catch((error) => {
+        toast.error('สร้างคำถามไม่สำเร็จ กรุณาลองใหม่อีกครั้ง')
+        console.error('===Create Question Error===', error)
+        throw error
       })
   }
 
@@ -94,13 +104,12 @@ export default () => {
       <h1>สร้างคำถาม</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Segment>
-          <Form.Field>
+          <Form.Field required>
             <label>คำถาม</label>
             <input
               placeholder=''
               name='name'
               ref={register({ required: true })}
-              required
             />
           </Form.Field>
           <Form.Field>
@@ -124,38 +133,29 @@ export default () => {
               </RadioButton>
             </Radio.Group>
           </Form.Field>
-          {type === QUESTIONTYPE.OBJECTIVE && getChoiceField(register)}
+
+          {type === QUESTIONTYPE.OBJECTIVE &&
+            fields.map((choice, index) => (
+              <ObjectiveChoiceInput
+                key={choice.id}
+                index={index}
+                choice={choice}
+                register={register}
+                handleChoiceRemove={handleChoiceRemove}
+                setIsCorrectAnswerTo={setIsCorrectAnswerTo}
+              />
+            ))}
           {type === QUESTIONTYPE.OBJECTIVE && (
-            <Form.Group inline>
-              <label>ชอยซ์ทีถูก</label>
-              <Form.Field
-                control={Checkbox}
-                label='1'
-                value={1}
-                onChange={handleOnCheckboxChange}
-              />
-              <Form.Field
-                control={Checkbox}
-                label='2'
-                value={2}
-                onChange={handleOnCheckboxChange}
-              />
-              <Form.Field
-                control={Checkbox}
-                label='3'
-                value={3}
-                onChange={handleOnCheckboxChange}
-              />
-              <Form.Field
-                control={Checkbox}
-                label='4'
-                value={4}
-                onChange={handleOnCheckboxChange}
-              />
-            </Form.Group>
+            <Button
+              icon='plus'
+              type='button'
+              size='tiny'
+              className='mb-2'
+              onClick={() => append({ label: '', isCorrectAnswer: false })}
+            />
           )}
           <CreateCategory title={'ประเภทของคำถาม'} onCategoriesChange={handleCategoriesChange} />
-          <Button color='orange' className='mt-3'>
+          <Button type='submit' color='orange' className='mt-3'>
             สร้างคำถาม
           </Button>
         </Segment>

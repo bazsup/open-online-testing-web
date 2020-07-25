@@ -4,15 +4,6 @@ import { darken } from "../../tools/colorConverter"
 import { Form } from "semantic-ui-react"
 import { useCallback } from "react"
 
-const Box = styled.div`
-  border-radius: 0.28571429rem;
-  min-height: 2.71428571em;
-  color: rgba(0, 0, 0, 0.87);
-  border: 1px solid rgba(34, 36, 38, 0.15);
-
-  padding: 0.22619048em 2.1em 0.22619048em 0.35714286em;
-`
-
 const LabelItem = styled.a`
   background-color: ${(props) => props.backgroundColor}!important;
   color: white !important;
