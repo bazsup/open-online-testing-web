@@ -10,6 +10,10 @@ const Button = styled.button`
   border: 0;
   border-radius: 4px;
   padding: 7px 9px;
+
+  &:focus {
+    outline: none;
+  }
 `
 const NavItem = styled(Link)`
   margin: 0 10px;
