@@ -1,10 +1,6 @@
 import React, { useCallback, useState } from 'react'
-import { useForm, useFieldArray } from 'react-hook-form'
-import {
-  Segment,
-  Form,
-  Button,
-} from 'semantic-ui-react'
+import { useForm, useFieldArray, Controller } from 'react-hook-form'
+import { Segment, Form, Button } from 'semantic-ui-react'
 import { Radio } from 'antd'
 import styled from '@emotion/styled'
 import { color } from '../constants'
@@ -27,7 +23,6 @@ const QUESTIONTYPE = {
   SUBJECTIVE: 'SUBJECTIVE',
 }
 
-
 export default () => {
   const [type, setType] = useState(QUESTIONTYPE.OBJECTIVE)
   const [categories, setCategories] = useState([])
@@ -39,6 +34,7 @@ export default () => {
     setValue,
     getValues,
     reset,
+    errors,
   } = useForm({
     defaultValues: {
       choices: [
@@ -55,20 +51,23 @@ export default () => {
     name: 'choices',
   })
 
-  const setIsCorrectAnswerTo = (value, index) => {
+  const setIsCorrectAnswerTo = (value, selectedIndex) => {
     setValue(
       `choices`,
-      fields.map((field, i) => {
-        if (index === i) {
+      fields.map((field, index) => {
+        if (selectedIndex === index) {
           field.isCorrectAnswer = value
         }
       })
     )
   }
 
-  const handleCategoriesChange = useCallback((categories) => {
-    setCategories(categories)
-  }, [setCategories])
+  const handleCategoriesChange = useCallback(
+    (categories) => {
+      setCategories(categories)
+    },
+    [setCategories]
+  )
 
   const handleChoiceRemove = (index) => {
     const choices = getValues().choices
@@ -104,14 +103,21 @@ export default () => {
       <h1>สร้างคำถาม</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Segment>
-          <Form.Field required>
-            <label>คำถาม</label>
-            <input
-              placeholder=''
-              name='name'
-              ref={register({ required: true })}
-            />
-          </Form.Field>
+          <Controller
+            control={control}
+            name='name'
+            rules={{ required: true, minLength: 5 }}
+            as={
+              <Form.Input
+                error={
+                  errors.name &&
+                  errors.name.type === 'minLength' &&
+                  'คำถามจำเป็นต้องมีจำนวนตัวอักษรจำนวน 5 ตัวอักษรขึ้นไป'
+                }
+                label='คำถาม'
+              />
+            }
+          />
           <Form.Field>
             <label>ประเภทคำถาม</label>
             <Radio.Group
@@ -147,14 +153,17 @@ export default () => {
             ))}
           {type === QUESTIONTYPE.OBJECTIVE && (
             <Button
-              icon='plus'
               type='button'
+              icon='plus'
               size='tiny'
               className='mb-2'
               onClick={() => append({ label: '', isCorrectAnswer: false })}
             />
           )}
-          <CreateCategory title={'ประเภทของคำถาม'} onCategoriesChange={handleCategoriesChange} />
+          <CreateCategory
+            title={'ประเภทของคำถาม'}
+            onCategoriesChange={handleCategoriesChange}
+          />
           <Button type='submit' color='orange' className='mt-3'>
             สร้างคำถาม
           </Button>
