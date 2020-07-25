@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: depa-backend-deployment
+  name: depa-frontend-deployment
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: depa-backend-deployment
+    name: depa-frontend-deployment
   targetCPUUtilizationPercentage: 70
   minReplicas: 3
   maxReplicas: 10

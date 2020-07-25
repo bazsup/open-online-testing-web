@@ -19,20 +19,10 @@ spec:
         app: depa-frontend
         version: dev
     spec:
-      volumes:
-        - name: static-content
-          emptyDir: {}
-        # - name: nginx-conf
-        #   emptyDir: {}
       imagePullSecrets:
        - name: ntt-azure-registry
       containers:
       - name: depa-frontend
-        volumeMounts:
-          - name: static-content
-            mountPath: /usr/share/nginx/html
-          # - name: nginx-conf
-          #   mountPath: /etc/nginx/conf.d
         image: AZ_CONTAINER_REGISTRY_URL/dev/depa-frontend:IMAGE_BUILD_ID
         readinessProbe:
           httpGet:
@@ -51,16 +41,6 @@ spec:
           value: "ENV_GIT_BRANCH"
         - name: VERSION
           value: "ENV_BUILD_ID"
-        - name: MONGO_PASSWORD
-          value: "ENV_MONGO_PASSWORD"
-        - name: FACEBOOK_ID
-          value: "ENV_FACEBOOK_ID"
-        - name: FACEBOOK_SECRET
-          value: "ENV_FACEBOOK_SECRET"
-        - name: GOOGLE_ID
-          value: "ENV_GOOGLE_ID"
-        - name: GOOGLE_SECRET
-          value: "ENV_GOOGLE_SECRET"
         resources:
           limits:
             memory: "256Mi"

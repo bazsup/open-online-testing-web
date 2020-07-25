@@ -46,16 +46,12 @@ pipeline {
                             choice(name: 'TAG_VERSION', choices: "${git_tags}", description: 'เลือก Tags ที่ต้องการ'),
                             text(name: 'BUILD_ID', defaultValue:"${BUILD_ID}"),
                             choice(name: 'SERVER_ENVIRONMENT', choices: getServerEnvironmentList(), description: 'เลือก Server Enviroment'),
-                            booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value'),
-                            password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
                         ]
                     }
                     env.BUILD_ID = input_params.BUILD_ID
                     env.BUILD_BRANCH = ''
                     env.SERVER_ENVIRONMENT = input_params.SERVER_ENVIRONMENT
                     env.TAG_VERSION = input_params.TAG_VERSION
-                    env.TOGGLE = input_params.TOGGLE
-                    env.PASSWORD = input_params.PASSWORD
                 }
             }
         }
