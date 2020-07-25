@@ -1,25 +1,3 @@
-// --bs-blue: #0d6efd;
-//     --bs-indigo: #6610f2;
-//     --bs-purple: #6f42c1;
-//     --bs-pink: #d63384;
-//     --bs-red: #dc3545;
-//     --bs-orange: #fd7e14;
-//     --bs-yellow: #ffc107;
-//     --bs-green: #28a745;
-//     --bs-teal: #20c997;
-//     --bs-cyan: #17a2b8;
-//     --bs-white: #fff;
-//     --bs-gray: #6c757d;
-//     --bs-gray-dark: #343a40;
-//     --bs-primary: #0d6efd;
-//     --bs-secondary: #6c757d;
-//     --bs-success: #28a745;
-//     --bs-info: #17a2b8;
-//     --bs-warning: #ffc107;
-//     --bs-danger: #dc3545;
-//     --bs-light: #f8f9fa;
-//     --bs-dark: #343a40;
-
 export function hexToHSL(H) {
   // Convert hex to RGB first
   let r = 0, g = 0, b = 0;
