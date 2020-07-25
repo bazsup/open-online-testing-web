@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Accordion, List, Icon, Button, Label } from 'semantic-ui-react'
+import { Accordion, List, Icon, Button } from 'semantic-ui-react'
 import { CategoryList } from '../Manage/CategoryList'
 
 export default ({ name, type, choices = null, categories = [] }) => {
