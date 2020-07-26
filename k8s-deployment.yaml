@@ -23,6 +23,9 @@ spec:
        - name: ntt-azure-registry
       containers:
       - name: depa-frontend
+        # สั่ง pull iamge ใหม่ทุกครั้งเพราะเรามีโอกาสใช้เลข Tag Version เดิมถ้าไม่สั่งบังคับ pull ก็จะไม่อัพเวอร์ชั่น
+        # แต่ถ้าใช้ :latest ก็จะ default เป็น Always ให้เลยทันที
+        imagePullPolicy: Always
         image: AZ_CONTAINER_REGISTRY_URL/dev/depa-frontend:IMAGE_BUILD_ID
         readinessProbe:
           httpGet:
