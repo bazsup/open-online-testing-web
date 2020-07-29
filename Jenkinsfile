@@ -128,7 +128,7 @@ pipeline {
                     def COMMIT_MESSAGE = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                     // replace อักขระพิเศษออกไปป้องกัน sed มีปัญหา
 
-                    env.COMMIT_MESSAGE = COMMIT_MESSAGE.replaceAll("(\')|(\")|(/)|(\\\\)|(\\()|(\\))", "")
+                    env.COMMIT_MESSAGE = COMMIT_MESSAGE.replaceAll("(\')|(\")|(/)|(\\\\)|(\\()|(\\))|(\n)|(\t)", "")
                     env.BUILD_BRANCH = env.BUILD_BRANCH.replaceAll("(\')|(\")|(/)|(\\\\)|(\\()|(\\))", "\\\\/")
                     sh "echo ${env.COMMIT_MESSAGE}"
                   
