@@ -150,6 +150,7 @@ pipeline {
                         env.K8S_DEPLOY_YAML_PROFILE = "k8s-deployment.yaml"
                         env.K8S_SERVICE_YAML_PROFILE = "k8s-service-nodeport.yaml"
                     }
+                    env.K8S_CONFIG_YAML_PROFILE = "k8s-configmap.yaml"
                      // ใช้กำหนด docker image ที่จะรัน pod
                     sh "sed -i 's/AZ_CONTAINER_REGISTRY_URL/${AZ_CONTAINER_REGISTRY_URL}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
                     sh "sed -i 's/IMAGE_GIT_BRANCH-/${env.BUILD_BRANCH}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
@@ -161,6 +162,8 @@ pipeline {
                     sh "echo ============ Deploy to Kubernetes to ${env.SERVER_ENVIRONMENT} API ============="
                     // สร้าง Deployment Resouce
                     sh "kubectl apply -f ${env.K8S_DEPLOY_YAML_PROFILE}"
+                    // apply config map
+                    sh "kubectl apply -f ${env.K8S_CONFIG_YAML_PROFILE}"
                     // สร้าง Service Resouce สำหรับทำ Service Discovery
                     sh "kubectl apply -f ${env.K8S_SERVICE_YAML_PROFILE} --record=true"
                 }
