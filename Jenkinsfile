@@ -160,10 +160,10 @@ pipeline {
                     // สั่ง apply resource ไปยัง K8S
                     sh "echo =========================================="
                     sh "echo ============ Deploy to Kubernetes to ${env.SERVER_ENVIRONMENT} API ============="
-                    // สร้าง Deployment Resouce
-                    sh "kubectl apply -f ${env.K8S_DEPLOY_YAML_PROFILE}"
                     // apply config map
                     sh "kubectl apply -f ${env.K8S_CONFIG_YAML_PROFILE}"
+                    // สร้าง Deployment Resouce
+                    sh "kubectl apply -f ${env.K8S_DEPLOY_YAML_PROFILE}"
                     // สร้าง Service Resouce สำหรับทำ Service Discovery
                     sh "kubectl apply -f ${env.K8S_SERVICE_YAML_PROFILE} --record=true"
                 }
