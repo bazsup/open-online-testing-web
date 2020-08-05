@@ -10,6 +10,25 @@ import 'antd/dist/antd.css'
 import 'semantic-ui-css/semantic.min.css'
 import './index.css'
 import App from './App'
+import jwtDecode from 'jwt-decode'
+import api from './api/instance'
+
+console.log("Test");
+    let userJwtToken = localStorage.getItem("jwtToken")
+    try {
+      let decodedJwt = jwtDecode(userJwtToken)
+      if (Date.now() >= decodedJwt.exp * 1000) {
+        localStorage.removeItem("jwtToken")
+      } else {
+        console.log("still in time")
+        console.log(decodedJwt.user.userType)
+        api.defaults.headers.common['x-user-type'] = decodedJwt.user.userType
+        console.log(decodedJwt)
+      }
+
+    } catch (err) {
+      console.log("not have jwt")
+    }
 
 ReactDOM.render(
   <React.StrictMode>

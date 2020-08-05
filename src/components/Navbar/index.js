@@ -26,7 +26,7 @@ const NavItem = styled(Link)`
 export default () => (
   <nav className='navbar navbar-expand-lg navbar-light bg-light'>
     <div className='container'>
-      <a className='navbar-brand' href='#'>
+      <a className='navbar-brand' href='/'>
         ดีป้าล่ะ
       </a>
       <button
@@ -41,6 +41,7 @@ export default () => (
         <div className='navbar-nav ml-auto flex align-items-center'>
           <NavItem to='/'>แดชบอร์ด</NavItem>
           <NavItem href='#'>รีพอร์ท</NavItem>
+          <NavItem to='/login'>เข้าสู่ระบบ</NavItem>
           <NavItem to='/manage'>
             <Button>สร้างชุดคำถาม</Button>
           </NavItem>
