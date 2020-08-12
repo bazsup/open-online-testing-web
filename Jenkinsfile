@@ -46,16 +46,12 @@ pipeline {
                             choice(name: 'TAG_VERSION', choices: "${git_tags}", description: 'เลือก Tags ที่ต้องการ'),
                             text(name: 'BUILD_ID', defaultValue:"${BUILD_ID}"),
                             choice(name: 'SERVER_ENVIRONMENT', choices: getServerEnvironmentList(), description: 'เลือก Server Enviroment'),
-                            booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value'),
-                            password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
                         ]
                     }
                     env.BUILD_ID = input_params.BUILD_ID
                     env.BUILD_BRANCH = ''
                     env.SERVER_ENVIRONMENT = input_params.SERVER_ENVIRONMENT
                     env.TAG_VERSION = input_params.TAG_VERSION
-                    env.TOGGLE = input_params.TOGGLE
-                    env.PASSWORD = input_params.PASSWORD
                 }
             }
         }
@@ -132,7 +128,7 @@ pipeline {
                     def COMMIT_MESSAGE = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                     // replace อักขระพิเศษออกไปป้องกัน sed มีปัญหา
 
-                    env.COMMIT_MESSAGE = COMMIT_MESSAGE.replaceAll("(\')|(\")|(/)|(\\\\)|(\\()|(\\))", "")
+                    env.COMMIT_MESSAGE = COMMIT_MESSAGE.replaceAll("(\')|(\")|(/)|(\\\\)|(\\()|(\\))|(\n)|(\t)", "")
                     env.BUILD_BRANCH = env.BUILD_BRANCH.replaceAll("(\')|(\")|(/)|(\\\\)|(\\()|(\\))", "\\\\/")
                     sh "echo ${env.COMMIT_MESSAGE}"
                   
@@ -154,6 +150,7 @@ pipeline {
                         env.K8S_DEPLOY_YAML_PROFILE = "k8s-deployment.yaml"
                         env.K8S_SERVICE_YAML_PROFILE = "k8s-service-nodeport.yaml"
                     }
+                    env.K8S_CONFIG_YAML_PROFILE = "k8s-configmap.yaml"
                      // ใช้กำหนด docker image ที่จะรัน pod
                     sh "sed -i 's/AZ_CONTAINER_REGISTRY_URL/${AZ_CONTAINER_REGISTRY_URL}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
                     sh "sed -i 's/IMAGE_GIT_BRANCH-/${env.BUILD_BRANCH}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
@@ -163,6 +160,8 @@ pipeline {
                     // สั่ง apply resource ไปยัง K8S
                     sh "echo =========================================="
                     sh "echo ============ Deploy to Kubernetes to ${env.SERVER_ENVIRONMENT} API ============="
+                    // apply config map
+                    sh "kubectl apply -f ${env.K8S_CONFIG_YAML_PROFILE}"
                     // สร้าง Deployment Resouce
                     sh "kubectl apply -f ${env.K8S_DEPLOY_YAML_PROFILE}"
                     // สร้าง Service Resouce สำหรับทำ Service Discovery

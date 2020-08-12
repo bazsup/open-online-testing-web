@@ -19,21 +19,24 @@ spec:
         app: depa-frontend
         version: dev
     spec:
-      volumes:
-        - name: static-content
-          emptyDir: {}
-        - name: nginx-conf
-          emptyDir: {}
       imagePullSecrets:
        - name: ntt-azure-registry
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: depa-frontend-nginx-config
       containers:
       - name: depa-frontend
-        volumeMounts:
-          - name: static-content
-            mountPath: /usr/share/nginx/html
-          - name: nginx-conf
-            mountPath: /etc/nginx/conf.d
+        # สั่ง pull iamge ใหม่ทุกครั้งเพราะเรามีโอกาสใช้เลข Tag Version เดิมถ้าไม่สั่งบังคับ pull ก็จะไม่อัพเวอร์ชั่น
+        # แต่ถ้าใช้ :latest ก็จะ default เป็น Always ให้เลยทันที
+        imagePullPolicy: Always
         image: AZ_CONTAINER_REGISTRY_URL/dev/depa-frontend:IMAGE_BUILD_ID
+        volumeMounts:
+          - name: nginx-config
+            mountPath: /etc/nginx/conf.d/
+          - name: nginx-config
+            mountPath: ~/test
+
         readinessProbe:
           httpGet:
             path: /
@@ -51,16 +54,6 @@ spec:
           value: "ENV_GIT_BRANCH"
         - name: VERSION
           value: "ENV_BUILD_ID"
-        - name: MONGO_PASSWORD
-          value: "ENV_MONGO_PASSWORD"
-        - name: FACEBOOK_ID
-          value: "ENV_FACEBOOK_ID"
-        - name: FACEBOOK_SECRET
-          value: "ENV_FACEBOOK_SECRET"
-        - name: GOOGLE_ID
-          value: "ENV_GOOGLE_ID"
-        - name: GOOGLE_SECRET
-          value: "ENV_GOOGLE_SECRET"
         resources:
           limits:
             memory: "256Mi"
