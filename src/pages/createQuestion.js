@@ -1,23 +1,13 @@
-import React, { useState } from 'react'
-import { useForm, useFieldArray } from 'react-hook-form'
-import {
-  Segment,
-  Form,
-  Button,
-  Dropdown as UnstyledDropdown,
-} from 'semantic-ui-react'
-import { Radio, message } from 'antd'
+import React, { useCallback, useState } from 'react'
+import { useForm, useFieldArray, Controller } from 'react-hook-form'
+import { Segment, Form, Button } from 'semantic-ui-react'
+import { Radio } from 'antd'
 import styled from '@emotion/styled'
 import { color } from '../constants'
 import * as questionService from '../services/question'
+import CreateCategory from '../components/Manage/CreateCategory'
 import ObjectiveChoiceInput from '../components/ObjectiveChoiceInput'
 import { toast } from '../libs/toast'
-
-const Dropdown = styled(UnstyledDropdown)`
-  .ui.label {
-    text-decoration: none;
-  }
-`
 
 const RadioButton = styled(Radio.Button)`
   background-color: ${(props) => props.active && color.orange} !important;
@@ -33,13 +23,6 @@ const QUESTIONTYPE = {
   SUBJECTIVE: 'SUBJECTIVE',
 }
 
-const options = [{ key: 1, text: 'History', value: 'History' }]
-
-const renderLabel = (label) => ({
-  color: 'orange',
-  content: label.text,
-})
-
 export default () => {
   const [type, setType] = useState(QUESTIONTYPE.OBJECTIVE)
   const [categories, setCategories] = useState([])
@@ -51,6 +34,7 @@ export default () => {
     setValue,
     getValues,
     reset,
+    errors,
   } = useForm({
     defaultValues: {
       choices: [
@@ -62,28 +46,35 @@ export default () => {
     },
   })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove: removeChoice } = useFieldArray({
     control,
     name: 'choices',
   })
 
-  const setIsCorrectAnswerTo = (value, index) => {
+  const setIsCorrectAnswerTo = (value, selectedIndex) => {
     setValue(
       `choices`,
-      fields.map((field, i) => {
-        if (index === i) {
+      fields.map((field, index) => {
+        if (selectedIndex === index) {
           field.isCorrectAnswer = value
         }
       })
     )
   }
 
+  const handleCategoriesChange = useCallback(
+    (categories) => {
+      setCategories(categories)
+    },
+    [setCategories]
+  )
+
   const handleChoiceRemove = (index) => {
     const choices = getValues().choices
     if (choices.length - 1 < 2) {
       return alert('จำนวนช้อยส์ต้องมากกว่า 2 จำนวนขึ้นไป')
     }
-    remove(index)
+    removeChoice(index)
   }
 
   const onSubmit = (data) => {
@@ -112,14 +103,21 @@ export default () => {
       <h1>สร้างคำถาม</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Segment>
-          <Form.Field required>
-            <label>คำถาม</label>
-            <input
-              placeholder=''
-              name='name'
-              ref={register({ required: true })}
-            />
-          </Form.Field>
+          <Controller
+            control={control}
+            name='name'
+            rules={{ required: true, minLength: 5 }}
+            as={
+              <Form.Input
+                error={
+                  errors.name &&
+                  errors.name.type === 'minLength' &&
+                  'คำถามจำเป็นต้องมีจำนวนตัวอักษรจำนวน 5 ตัวอักษรขึ้นไป'
+                }
+                label='คำถาม'
+              />
+            }
+          />
           <Form.Field>
             <label>ประเภทคำถาม</label>
             <Radio.Group
@@ -155,21 +153,16 @@ export default () => {
             ))}
           {type === QUESTIONTYPE.OBJECTIVE && (
             <Button
+              type='button'
               icon='plus'
               size='tiny'
               className='mb-2'
               onClick={() => append({ label: '', isCorrectAnswer: false })}
             />
           )}
-          <Dropdown
-            multiple
-            selection
-            name='categories'
-            fluid
-            options={options}
-            placeholder='เลือกประเภทของคำถาม'
-            renderLabel={renderLabel}
-            onChange={(_, { value }) => setCategories(value)}
+          <CreateCategory
+            title={'ประเภทของคำถาม'}
+            onCategoriesChange={handleCategoriesChange}
           />
           <Button type='submit' color='orange' className='mt-3'>
             สร้างคำถาม

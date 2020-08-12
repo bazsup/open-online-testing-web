@@ -9,6 +9,7 @@ import * as ExamService from '../services/exam'
 import { PrimaryButton } from "../elements/PrimaryButton";
 import { useCallback } from "react";
 import { Empty } from "antd";
+import CreateCategory from "../components/Manage/CreateCategory"
 
 const ScrollablePane = styled.div`
   height: 250px;
@@ -18,6 +19,7 @@ const ScrollablePane = styled.div`
 const ExamCreatePage = (props) => {
   const [selectedQuestions, setSelectedQuestions] = useState([])
   const [questions, setQuestions] = useState([])
+  const [categories, setCategories] = useState([])
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -34,6 +36,7 @@ const ExamCreatePage = (props) => {
   const { register, handleSubmit } = useForm()
   const onSubmit = (exam) => {
     exam.questions = selectedQuestions
+    exam.categories = categories
     ExamService.create(exam)
       .then(() => {
         alert('สร้างข้อสอบสำเร็จ')
@@ -49,6 +52,10 @@ const ExamCreatePage = (props) => {
     setSelectedQuestions(selectedQuestions.filter(question => question.id !== item.id))
     setQuestions([...questions, item])
   }, [selectedQuestions, setSelectedQuestions, setQuestions, questions])
+
+  const handleCategoriesChange = useCallback((categories) => {
+    setCategories(categories)
+  }, [setCategories])
 
   return (
     <React.Fragment>
@@ -93,6 +100,7 @@ const ExamCreatePage = (props) => {
               </div>
             </Segment>
           </Form.Field>
+          <CreateCategory title={'ประเภทของคำถาม'} onCategoriesChange={handleCategoriesChange} />
           <PrimaryButton className='mt-3'>
             สร้างข้อสอบ
           </PrimaryButton>

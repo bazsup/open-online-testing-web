@@ -18,7 +18,8 @@ export default ({
           <input
             name={`choices[${index}].label`}
             defaultValue={choice.label}
-            ref={register()}
+            required
+            ref={register({ required: true, minLength: 1 })}
           />
         </Input>
       </Form.Field>
