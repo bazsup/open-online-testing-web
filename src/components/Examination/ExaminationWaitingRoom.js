@@ -1,7 +1,7 @@
 import React from 'react'
 import { getExaminationDateFormat } from './utils'
 import { SegmentTitle } from '../../elements/SegmentTitle'
-import { Segment, TextArea, Checkbox, Button } from 'semantic-ui-react'
+import { Segment, Checkbox, Button } from 'semantic-ui-react'
 
 const TERM_AND_CONDITION = `ซัดดัมร้อยเอ็ดราชลัญจกร รามาวตารคลื่นเหียนลากข้างเบญกายสีหโมนี
 มโนกรรมกระบี่ คนใช้ไลบีเรียเนชั่นมอนแทนา

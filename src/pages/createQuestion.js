@@ -49,7 +49,7 @@ export default () => {
   const setIsCorrectAnswerTo = (value, selectedIndex) => {
     setValue(
       `choices`,
-      fields.map((field, index) => {
+      fields.forEach((field, index) => {
         if (selectedIndex === index) {
           field.isCorrectAnswer = value
         }
@@ -75,7 +75,7 @@ export default () => {
   const onSubmit = (data) => {
     data.categories = categories
     data.type = type
-    data.choices.map(
+    data.choices.forEach(
       (choice, index) =>
         (choice.isCorrectAnswer = fields[index].isCorrectAnswer)
     )
