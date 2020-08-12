@@ -77,11 +77,20 @@ export default function ExaminationRoom({ examDetail }) {
     setQuestions(mock.questions)
   }, [examDetail])
 
+  function onFinishExam() {
+    alert('การทำข้อสอบจบลงแล้ว')
+    //Handle redirect here
+  }
+
   return (
     <div>
       <Info className='d-flex justify-content-center align-items-center mb-5'>
         เหลือเวลาทำข้อสอบอีก
-        <Countdown value={examDetail.endAt} className='ml-2' />
+        <Countdown
+          value={examDetail.endAt}
+          className='ml-2'
+          onFinish={onFinishExam}
+        />
       </Info>
       {questions === null ? (
         <Loader />
