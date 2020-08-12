@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import * as questionService from '../services/question'
 import { loginVanila } from '../services/authen'
 import api from '../api/instance'
 import jwtDecode from 'jwt-decode'
+
+const Login = () => {
+    const [email, wow] = useState('')
+    const [password, wowPassword] = useState('')
+    return (
+        <div>
+            <input name='email' onChange={e => wow(e.target.value)}/>
+            <input name='password' type='password' onChange={e=> wowPassword(e.target.value)} />
+            <button>submit</button>
+        </div>
+    )
+}
+
 export default () => {
-    const [questions, setQuestions] = useState([])
-
-    const [count, setCount] = useState("");
-
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            const result = await questionService.getAll()
-            setQuestions(result.data)
-        }
-        fetchQuestions()
-    }, [setQuestions])
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const login = (evt) => {
-        // evt.preventDefault();
+    const login = () => {
         loginVanila({
             email, password
         }).then(loginResponse => {
             console.log(loginResponse.status)
-            let userJwtToken = loginResponse.data.jwtToken
+            const userJwtToken = loginResponse.data.jwtToken
             console.log(userJwtToken)
             localStorage.setItem("jwtToken", userJwtToken)
             alert(`Login Success Name ${email} 😎😎😎`)
@@ -39,7 +38,7 @@ export default () => {
         })
     }
 
-    const logout = (evt)=>{
+    const logout = () => {
         alert("Clear cache JWT !!!")
         localStorage.clear()
     }
