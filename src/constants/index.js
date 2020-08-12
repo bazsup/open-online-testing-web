@@ -50,4 +50,7 @@ export const lang = {
     // error
     invalidEmailOrPassword: '⚠️ อีเมลหรือรหัสผ่านไม่ถูกต้อง'
   }
+export const QUESTIONTYPE = {
+  OBJECTIVE: 'OBJECTIVE',
+  SUBJECTIVE: 'SUBJECTIVE',
 }

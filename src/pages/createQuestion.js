@@ -3,7 +3,7 @@ import { useForm, useFieldArray, Controller } from 'react-hook-form'
 import { Segment, Form, Button } from 'semantic-ui-react'
 import { Radio } from 'antd'
 import styled from '@emotion/styled'
-import { color } from '../constants'
+import { color, QUESTIONTYPE } from '../constants'
 import * as questionService from '../services/question'
 import CreateCategory from '../components/Manage/CreateCategory'
 import ObjectiveChoiceInput from '../components/ObjectiveChoiceInput'
@@ -17,11 +17,6 @@ const RadioButton = styled(Radio.Button)`
     color: ${(props) => !props.active && color.orange} !important;
   }
 `
-
-const QUESTIONTYPE = {
-  OBJECTIVE: 'OBJECTIVE',
-  SUBJECTIVE: 'SUBJECTIVE',
-}
 
 export default () => {
   const [type, setType] = useState(QUESTIONTYPE.OBJECTIVE)
