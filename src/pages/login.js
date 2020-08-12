@@ -3,18 +3,6 @@ import { loginVanila } from '../services/authen'
 import api from '../api/instance'
 import jwtDecode from 'jwt-decode'
 
-const Login = () => {
-    const [email, wow] = useState('')
-    const [password, wowPassword] = useState('')
-    return (
-        <div>
-            <input name='email' onChange={e => wow(e.target.value)}/>
-            <input name='password' type='password' onChange={e=> wowPassword(e.target.value)} />
-            <button>submit</button>
-        </div>
-    )
-}
-
 export default () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

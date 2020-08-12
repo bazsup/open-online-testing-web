@@ -18,10 +18,10 @@ function App() {
       if (Date.now() >= decodedJwt.exp * 1000) {
         localStorage.removeItem("jwtToken")
       } else {
-        console.log("still in time")
-        console.log(decodedJwt.user.userType)
+        // console.log("still in time")
+        // console.log(decodedJwt.user.userType)
         api.defaults.headers.common['x-user-type'] = decodedJwt.user.userType
-        console.log(decodedJwt)
+        // console.log(decodedJwt)
       }
     }
   }, [])
