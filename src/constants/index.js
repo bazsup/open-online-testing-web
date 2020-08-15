@@ -12,5 +12,10 @@ export const lang = {
   th: {
     loginSuccess: 'เข้าสู่ระบบสำเร็จ',
     loginFail: 'เข้าสู่ระบบไม่สำเร็จ โปรดลองใหม่อีกครั้ง',
+    login: 'เข้าสู่ระบบ',
+    email: 'อีเมล',
+    password: 'รหัสผ่าน',
+    doesNotHaveAnAccount: 'ยังไม่มีบัญชี ?',
+    register: 'สมัครสมาชิก'
   }
 }
