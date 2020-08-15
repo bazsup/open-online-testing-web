@@ -5,3 +5,12 @@ export const color = {
   softGrey: '#F5F6F8',
   darkGrey: '#3D3C43',
 }
+
+export const JWT_TOKEN = 'jwtToken'
+
+export const lang = {
+  th: {
+    loginSuccess: 'เข้าสู่ระบบสำเร็จ',
+    loginFail: 'เข้าสู่ระบบไม่สำเร็จ โปรดลองใหม่อีกครั้ง',
+  }
+}
