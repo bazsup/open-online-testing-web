@@ -5,7 +5,7 @@ export default () => {
   return (
     <div className="container">
       <div className="row justify-content-center">
-        <div className="col-5">
+        <div className="col-md-5">
           <div className="card">
             <div className="card-body">
               <LoginForm />

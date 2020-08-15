@@ -2,8 +2,7 @@ import React, { useState } from "react"
 import jwtDecode from "jwt-decode"
 
 import { JWT_TOKEN, lang } from "../../constants"
-import { loginVanila } from "../../services/authen"
-import api from "../../api/instance"
+import { login } from "../../services/authen"
 import { PrimaryButton } from "../../elements/PrimaryButton"
 import { Form, Input } from "semantic-ui-react"
 
@@ -11,18 +10,15 @@ const LoginForm = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const login = () => {
-    loginVanila({
+  const handleLogin = () => {
+    login({
       email,
       password,
     })
       .then((loginResponse) => {
-        const userJwtToken = loginResponse.data.jwtToken
+        const userJwtToken = loginResponse.data.accessToken
         localStorage.setItem(JWT_TOKEN, userJwtToken)
         alert(lang.th.loginSuccess)
-        api.defaults.headers.common["x-user-type"] = jwtDecode(
-          userJwtToken
-        ).user.userType
       })
       .catch((err) => {
         alert(lang.th.loginFail)
@@ -60,7 +56,7 @@ const LoginForm = () => {
               }}
             />
           </Form.Field>
-          <PrimaryButton fluid onClick={login}>
+          <PrimaryButton fluid onClick={handleLogin}>
             Login
           </PrimaryButton>
           {/* <button onClick={logout} class="ui secondary button">

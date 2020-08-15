@@ -20,7 +20,7 @@ function App() {
       } else {
         // console.log("still in time")
         // console.log(decodedJwt.user.userType)
-        api.defaults.headers.common['x-user-type'] = decodedJwt.user.userType
+        // api.defaults.headers.common['x-user-type'] = decodedJwt.user.userType
         // console.log(decodedJwt)
       }
     }
