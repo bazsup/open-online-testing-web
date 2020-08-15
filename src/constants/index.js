@@ -16,6 +16,7 @@ export const lang = {
     email: 'อีเมล',
     password: 'รหัสผ่าน',
     doesNotHaveAnAccount: 'ยังไม่มีบัญชี ?',
-    register: 'สมัครสมาชิก'
+    register: 'สมัครสมาชิก',
+    or: 'หรือ'
   }
 }
