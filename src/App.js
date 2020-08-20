@@ -12,6 +12,8 @@ import JwtDecode from 'jwt-decode'
 import * as UserService from './services/user'
 import * as AuthenService from './services/authen'
 import { JWT_TOKEN } from './constants'
+import ProtectedRoute from './components/ProtectedRoute'
+import NotFound from './components/NotFound'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -34,7 +36,7 @@ function App() {
       }
 
       AuthenService.setToken(userJwtToken)
-      fetchUser()      
+      fetchUser()
     }
   }, [fetchUser])
 
@@ -48,20 +50,28 @@ function App() {
           />
           <div className="container mt-5">
             <Switch>
-              <Route path="/manage" exact component={ManagePage} />
-              <Route path="/manage/exam" exact component={ManageExamPage} />
+              <Route exact path="/">ยินดีต้อนรับ</Route>
               <Route
                 path="/login"
                 exact
                 render={() => <Login loadUser={fetchUser} />}
               />
               <Route path="/register" component={RegisterPage} />
-              <Route
+              <ProtectedRoute path="/manage" exact component={ManagePage} />
+              <ProtectedRoute
+                path="/manage/exam"
+                exact
+                component={ManageExamPage}
+              />
+              <ProtectedRoute
                 path="/manage/question/create"
                 component={CreateQuestionPage}
               />
-              <Route path="/manage/exam/create" component={CreateExamPage} />
-              <Route path="/">ยินดีต้อนรับ</Route>
+              <ProtectedRoute
+                path="/manage/exam/create"
+                component={CreateExamPage}
+              />
+              <Route component={NotFound} />
             </Switch>
           </div>
         </Router>
