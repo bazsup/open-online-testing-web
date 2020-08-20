@@ -6,7 +6,7 @@ import { PrimaryButton } from '../../elements/PrimaryButton'
 import { Form, Input } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-const LoginForm = () => {
+const LoginForm = ({ onSuccess, onError }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -18,15 +18,12 @@ const LoginForm = () => {
       .then((loginResponse) => {
         const userJwtToken = loginResponse.data.accessToken
         localStorage.setItem(JWT_TOKEN, userJwtToken)
-        alert(lang.th.loginSuccess)
-        redirectPageAfterLogin()
+        onSuccess()
       })
       .catch((err) => {
-        alert(lang.th.loginFail)
+        onError(lang.th.invalidEmailOrPassword)
       })
   }
-
-  const redirectPageAfterLogin = () => {}
 
   return (
     <Form>
@@ -57,9 +54,9 @@ const LoginForm = () => {
           <PrimaryButton fluid onClick={handleLogin}>
             {lang.th.login}
           </PrimaryButton>
-          <p className="mt-2 text-right">
+          <p className="mt-3 text-center">
             {`${lang.th.doesNotHaveAnAccount} `}
-            <Link to="/register">{lang.th.register}</Link>
+            <Link to="/register">{lang.th.clickToRegister}</Link>
           </p>
           {/* <button onClick={logout} class="ui secondary button">
             Logout
