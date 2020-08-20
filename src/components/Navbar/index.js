@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from '@emotion/styled'
-import { color } from '../../constants'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { Button as ReactButton, Dropdown, Icon } from 'semantic-ui-react'
+
+import { color, lang } from '../../constants'
+import { useContext } from 'react'
+import { UserContext } from '../../context/user-context'
 
 const Button = styled.button`
   background-color: ${color.orange};
@@ -23,30 +27,62 @@ const NavItem = styled(Link)`
   text-decoration: none;
 `
 
-export default () => (
-  <nav className='navbar navbar-expand-lg navbar-light bg-light'>
-    <div className='container'>
-      <Link className='navbar-brand' to='/'>
-        ดีป้าล่ะ
-      </Link>
-      <button
-        className='navbar-toggler'
-        type='button'
-        data-toggle='collapse'
-        data-target='#navMenu'
-      >
-        <span className='navbar-toggler-icon'></span>
-      </button>
-      <div className='collapse navbar-collapse' id='navMenu'>
-        <div className='navbar-nav ml-auto flex align-items-center'>
-          <NavItem to='/'>แดชบอร์ด</NavItem>
-          <NavItem href='#'>รีพอร์ท</NavItem>
-          <NavItem to='/login'>เข้าสู่ระบบ</NavItem>
-          <NavItem to='/manage'>
-            <Button>สร้างชุดคำถาม</Button>
-          </NavItem>
+export default ({ isAuthenticated, setIsAuthenticated }) => {
+  const userContext = useContext(UserContext)
+
+  const history = useHistory()
+  const logout = useCallback(() => {
+    setIsAuthenticated(false)
+    localStorage.clear()
+    history.push('/')
+  }, [history, setIsAuthenticated])
+
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container">
+        <Link className="navbar-brand" to="/">
+          ดีป้าล่ะ
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navMenu"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navMenu">
+          <div className="navbar-nav ml-auto flex align-items-center">
+            {isAuthenticated ? (
+              <React.Fragment>
+                <NavItem to="/manage">
+                  <Button>สร้างชุดข้อสอบ</Button>
+                </NavItem>
+                <Dropdown
+                  trigger={
+                    <ReactButton circular basic>
+                      <Icon name="user" /> {userContext.user.name}
+                    </ReactButton>
+                  }
+                  icon={null}
+                  pointing="top right"
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item text={lang.th.logout} onClick={logout} />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <NavItem to="/login">{lang.th.login}</NavItem>
+                <NavItem to="/register">
+                  <Button>{lang.th.register}</Button>
+                </NavItem>
+              </React.Fragment>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
-)
+    </nav>
+  )
+}
