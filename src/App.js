@@ -14,6 +14,7 @@ import * as AuthenService from './services/authen'
 import { JWT_TOKEN } from './constants'
 import ProtectedRoute from './components/ProtectedRoute'
 import NotFound from './components/NotFound'
+import UnAuthenticatedRoute from './components/UnAuthenticatedRoute'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -50,13 +51,17 @@ function App() {
           />
           <div className="container mt-5">
             <Switch>
-              <Route exact path="/">ยินดีต้อนรับ</Route>
-              <Route
+              <Route exact path="/">
+                ยินดีต้อนรับ
+              </Route>
+              <UnAuthenticatedRoute
                 path="/login"
                 exact
-                render={() => <Login loadUser={fetchUser} />}
+                component={Login}
+                isAuthenticated={isAuthenticated}
+                loadUser={fetchUser}
               />
-              <Route path="/register" component={RegisterPage} />
+              <UnAuthenticatedRoute path="/register" component={RegisterPage} />
               <ProtectedRoute path="/manage" exact component={ManagePage} />
               <ProtectedRoute
                 path="/manage/exam"
