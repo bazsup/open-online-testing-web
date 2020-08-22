@@ -12,7 +12,7 @@ const useToggle = (initial = false) => {
   return [active, toggleActive]
 }
 
-export default ({ name, description, questions, categories }) => {
+export default ({ name, description, categories }) => {
   const [active, toggleActive] = useToggle(false)
   return (
     <React.Fragment>

@@ -14,10 +14,7 @@ import styled from '@emotion/styled'
 import { color, QUESTIONTYPE } from '../../constants'
 import { Statistic } from 'antd'
 import { toast } from '../../libs/toast'
-
 import * as examinationService from '../../services/examination'
-
-
 
 const { Countdown } = Statistic
 
@@ -38,13 +35,12 @@ export default function ExaminationRoom({ examDetail }) {
   useEffect(() => {
     examinationService.getExamQuestion(examId).then((response) => {
       const { data: { questions } } = response
-
       const initialAnswers = Array(questions.length).fill([])
       setAnswers(initialAnswers)
       setQuestions(questions)
     }).catch(() => {
       toast.error('เกิดข้อผิดพลาดในการดึงข้อสอบ กรุณาลองใหม่ในภายหลัง')
-      return history.push('/')
+      history.push('/')
     })
   }, [examDetail, examId, history])
 
@@ -65,29 +61,23 @@ export default function ExaminationRoom({ examDetail }) {
     })
   }
 
-  function handleOnSubmitAnswer() {
-    const requestBody = getFormatedAnswer()
-    console.log('requestBody', requestBody)
-  }
-
   function onCounterEnd() {
-    alert(
-      'การทำข้อสอบจบลงแล้ว เราได้ส่งคำตอบล่าสุดของคุณเข้าระบบให้เรียบร้อยแล้ว'
+    toast.info(
+      'การทำข้อสอบจบลงแล้ว ระบบกำลังส่งคำตอบให้คุณอัตโนมัติ'
     )
-    const requestBody = getFormatedAnswer()
-    submitExam(requestBody).then(() => {
-      redirectPage()
-    })
+    submitExam()
   }
 
-  function redirectPage() {}
+  function submitExam() {
+    const answers = getFormatedAnswer()
+    examinationService.submitExamination(examId, answers).then(() => {
+      toast.success('ทำการส่งคำตอบเรียบร้อย')
+      history.push('/')
+    }).catch(() => toast.error('เกิดปัญหาในการส่งคำตอบ กรุณาลองใหม่อีกครั้ง'))
+  }
 
-  function submitExam(answers) {
-    return new Promise((resolve) => {
-      console.log(answers)
-      resolve()
-    })
-    // return ExaminationService.submitExamination(answers)
+  if(questions === null) {
+    return <Loader /> 
   }
 
   return (
@@ -126,7 +116,7 @@ export default function ExaminationRoom({ examDetail }) {
                 <Button
                   color='orange'
                   inverted
-                  onClick={handleOnSubmitAnswer}
+                  onClick={submitExam}
                 >
                   <Icon name='checkmark' /> ยืนยัน
                 </Button>
@@ -143,32 +133,28 @@ export default function ExaminationRoom({ examDetail }) {
           onFinish={onCounterEnd}
         />
       </Info>
-      {questions === null ? (
-        <Loader />
-      ) : (
-        <div className='pb-3'>
-          <Card.Group>
-            {questions.map((question, index) => (
-              <QuestionCard
-                key={index}
-                question={question}
-                answers={answers}
-                index={index}
-                onChangeAnswer={onChangeAnswer}
-              />
-            ))}
-          </Card.Group>
-          <div className='d-flex justify-content-end'>
-            <Button
-              color='orange'
-              className='mt-3'
-              onClick={() => setModalOpen(true)}
-            >
-              ส่งคำตอบ
-            </Button>
-          </div>
+      <div className='pb-3'>
+        <Card.Group>
+          {questions.map((question, index) => (
+            <QuestionCard
+              key={index}
+              question={question}
+              answers={answers}
+              index={index}
+              onChangeAnswer={onChangeAnswer}
+            />
+          ))}
+        </Card.Group>
+        <div className='d-flex justify-content-end'>
+          <Button
+            color='orange'
+            className='mt-3'
+            onClick={() => setModalOpen(true)}
+          >
+            ส่งคำตอบ
+          </Button>
         </div>
-      )}
+      </div>
     </div>
   )
 }

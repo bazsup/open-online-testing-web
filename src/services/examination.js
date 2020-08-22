@@ -1,16 +1,14 @@
 import api from '../api/instance'
 
-export const submitExamination = (answers) => {
-  return new Promise((resolve, reject) => {
-    const mockData = {}
-    setTimeout(() => {
-      resolve(mockData)
-    }, 3000)
-  })
-  // api.post('/examination', answers)
+export const submitExamination = (examId, answers) => {
+  return api.post(`/exam/${examId}/answer/submit`, answers)
 }
 
 
 export const getExamQuestion = (examId) =>  {
   return api.get(`/exam/${examId}/questions`)
+}
+
+export const getExamInfo = (examId) => {
+  return api.get(`/exam/${examId}`)
 }
