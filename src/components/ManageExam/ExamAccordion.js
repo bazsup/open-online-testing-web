@@ -28,9 +28,7 @@ export default ({ name, description, questions, categories }) => {
           <div>
             {`รายละเอียด: ${description}`}
           </div>
-          <div>
-            {`จำนวนคำถาม: ${questions.length}`}
-          </div>
+
           {categories.length > 0 && <CategoryList categories={categories} />}
         </div>
         <div>

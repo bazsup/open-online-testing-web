@@ -75,7 +75,7 @@ function App() {
                 isAuthenticated={isAuthenticated}
               />
               <ProtectedRoute
-                path="/exam"
+                path="/exam/:examId"
                 exact
                 component={ExamPage}
                 isAuthenticated={isAuthenticated}

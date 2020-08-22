@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useParams, useHistory } from "react-router-dom";
 import {
   Card,
   Checkbox,
@@ -12,8 +13,11 @@ import {
 import styled from '@emotion/styled'
 import { color, QUESTIONTYPE } from '../../constants'
 import { Statistic } from 'antd'
+import { toast } from '../../libs/toast'
 
-import * as ExaminationService from '../../services/examination'
+import * as examinationService from '../../services/examination'
+
+
 
 const { Countdown } = Statistic
 
@@ -25,72 +29,24 @@ const Info = styled.div`
 `
 
 export default function ExaminationRoom({ examDetail }) {
+  const { examId } = useParams()
+  const history = useHistory()
   const [questions, setQuestions] = useState(null)
   const [answers, setAnswers] = useState([])
   const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
-    //use examDetail.id to fetch question
-    const mock = {
-      shuffleQuestion: true,
-      questions: [
-        {
-          id: '5f0cb92ac72c830800e0ef80',
-          name: 'ข้อใดไม่ใช่ Javascript Library',
-          isMultipleChoose: false,
-          type: 'OBJECTIVE',
-          attributes: null,
-          choices: [
-            {
-              label: 'React',
-            },
-            {
-              label: 'Ionic',
-            },
-            {
-              label: 'Vue',
-            },
-            {
-              label: 'Angular',
-            },
-          ],
-        },
-        {
-          id: '5f0cb92ac72c830800e0ef81',
-          name: 'อะไรเอ่ย?',
-          isMultipleChoose: true,
-          type: 'OBJECTIVE',
-          attributes: null,
-          choices: [
-            {
-              label: 'ไม่รู้ครับ',
-            },
-            {
-              label: 'ไม่รู้เหมือนกันครับ',
-            },
-            {
-              label: 'ไม่รู้ ไม่รู้',
-            },
-            {
-              label: 'ไม่รู้',
-            },
-          ],
-        },
-        {
-          id: '5f0cb92ac72c830800e0ef82',
-          name: 'จงเล่าพื้นฐานของภาษา Java',
-          type: 'SUBJECTIVE',
-          attributes: null,
-        },
-      ],
-    }
-    if (mock.shuffleQuestion) {
-      mock.questions = shuffleQuestion(mock.questions)
-    }
-    setQuestions(mock.questions)
-    const initialAnswers = Array(mock.questions.length).fill([])
-    setAnswers(initialAnswers)
-  }, [examDetail])
+    examinationService.getExamQuestion(examId).then((response) => {
+      const { data: { questions } } = response
+
+      const initialAnswers = Array(questions.length).fill([])
+      setAnswers(initialAnswers)
+      setQuestions(questions)
+    }).catch(() => {
+      toast.error('เกิดข้อผิดพลาดในการดึงข้อสอบ กรุณาลองใหม่ในภายหลัง')
+      return history.push('/')
+    })
+  }, [examDetail, examId, history])
 
   function onChangeAnswer(index, answer) {
     answers[index] = answer
@@ -170,7 +126,7 @@ export default function ExaminationRoom({ examDetail }) {
                 <Button
                   color='orange'
                   inverted
-                  onClick={() => setModalOpen(false)}
+                  onClick={handleOnSubmitAnswer}
                 >
                   <Icon name='checkmark' /> ยืนยัน
                 </Button>
@@ -218,7 +174,7 @@ export default function ExaminationRoom({ examDetail }) {
 }
 
 function QuestionCard({ question, answers, index, onChangeAnswer }) {
-  const { name, type, isMultipleChoose } = question
+  const { id, name, type, isMultipleChoose } = question
 
   if (type === QUESTIONTYPE.SUBJECTIVE) {
     return (
@@ -265,7 +221,6 @@ function QuestionCard({ question, answers, index, onChangeAnswer }) {
                 onChange={() => {
                   handleChangeObjectiveAnswer(choice.label)
                 }}
-                // checked={answer.includes(choice.label)}
               />
             </div>
           ))}
@@ -284,7 +239,7 @@ function QuestionCard({ question, answers, index, onChangeAnswer }) {
           <div>
             <Radio
               label={choice.label}
-              name='vs'
+              name={id.counter}
               value={choice.label}
               onChange={() => {
                 onChangeAnswer(index, [choice.label])
@@ -295,8 +250,4 @@ function QuestionCard({ question, answers, index, onChangeAnswer }) {
       </Card.Content>
     </Card>
   )
-}
-
-function shuffleQuestion(questions) {
-  return questions.sort(() => Math.random() - 0.5)
 }

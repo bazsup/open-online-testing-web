@@ -9,3 +9,8 @@ export const submitExamination = (answers) => {
   })
   // api.post('/examination', answers)
 }
+
+
+export const getExamQuestion = (examId) =>  {
+  return api.get(`/exam/${examId}/questions`)
+}
