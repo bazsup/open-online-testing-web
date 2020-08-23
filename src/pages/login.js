@@ -31,11 +31,11 @@ export default ({ loadUser }) => {
               {errorMessage !== '' && (
                 <Message error className="text-center" header={errorMessage} />
               )}
-              <SocialLogin />
+              <LoginForm onSuccess={handleLoginSuccess} onError={handleError} />
               <Divider className="my-4" horizontal>
                 {lang.th.or}
               </Divider>
-              <LoginForm onSuccess={handleLoginSuccess} onError={handleError} />
+              <SocialLogin />
             </div>
           </div>
         </div>
