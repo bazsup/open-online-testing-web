@@ -37,7 +37,7 @@ function App() {
           localStorage.removeItem(JWT_TOKEN)
           return
         }
-  
+
         AuthenService.setToken(userJwtToken)
         fetchUser()
       } catch (error) {
@@ -66,22 +66,37 @@ function App() {
                 isAuthenticated={isAuthenticated}
                 loadUser={fetchUser}
               />
-              <UnAuthenticatedRoute path="/register" component={RegisterPage} />
-              <ProtectedRoute path="/manage" exact component={ManagePage} />
+              <UnAuthenticatedRoute
+                path="/register"
+                component={RegisterPage}
+                isAuthenticated={isAuthenticated}
+              />
+              <ProtectedRoute
+                path="/manage"
+                exact
+                component={ManagePage}
+                isAuthenticated={isAuthenticated}
+              />
               <ProtectedRoute
                 path="/manage/exam"
                 exact
                 component={ManageExamPage}
+                isAuthenticated={isAuthenticated}
               />
               <ProtectedRoute
                 path="/manage/question/create"
                 component={CreateQuestionPage}
+                isAuthenticated={isAuthenticated}
               />
               <ProtectedRoute
                 path="/manage/exam/create"
                 component={CreateExamPage}
+                isAuthenticated={isAuthenticated}
               />
-              <Route path="/oauth2/redirect" component={Oauth2RedirectHandler} />
+              <Route
+                path="/oauth2/redirect"
+                component={Oauth2RedirectHandler}
+              />
               <Route component={NotFound} />
             </Switch>
           </div>
