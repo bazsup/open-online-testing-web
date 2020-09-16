@@ -1,68 +1,113 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Depa Testing Frontend (Intro)
 
-## Available Scripts
+โปรเจ็คนี้จัดทำขึ้นมาเพื่อเป็นตัวอย่างของหน้าเว็บไซต์ที่เป็นส่วนของ Presentation Layer ถูกพัฒนาด้วย React.js
 
-In the project directory, you can run:
+## Demo
 
-### `yarn start`
+depa-frontend.devopcultures.tk
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Usage
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- เรามีตัวอย่างในการ Login ด้วย Social media ต่าง ๆ
+- เรามีวิธีบริหาร State ในการจัดการข้อมูลเพื่อใช้ในการสร้างข้อสอบ
+- เรามีวิธีการวาง Structure ของโปรเจ็คที่คาดว่าน่าจะเป็นประโยชน์สำหรับการนำไปทดลองใช้
 
-### `yarn test`
+## Get Started
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. ทำการ Clone Project<br>
 
-### `yarn build`
+```sh
+$ git clone https://github.com/bazsup/depa-testing-frontend.git
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+หรือทำการ Download as zip ก็ได้เช่นกัน
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+2. เข้าไปยัง Directory ของ Project จากนั้นทำการลง Dependency ที่โปรเจ็คใช้งาน ในขั้นตอนนี้จำเป็นต้องทำการติดตั้ง Package Management ของภาษา Javascript ก่อน เช่น npm, yarn
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```sh
+$ yarn
+```
 
-### `yarn eject`
+หรือ
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```sh
+$ npm install
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+\*หากไม่มี npm สามารถดาวโหลด nodejs เพื่อมาติดตั้งได้ที่ https://nodejs.org/en/download/
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+3. หลังจากทำการลง Dependency เรียบร้อยแล้วสามารถเปิดโปรเจ็คขึ้นมาด้วยคำสั่ง
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```sh
+$ yarn start
+```
 
-## Learn More
+หรือ
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```sh
+$ npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+เมื่อโปรเจ็คถูกรันขึ้นมาแล้ว สามารถเข้าได้ผ่าน http://localhost:3000/
 
-### Code Splitting
+## Roadmap
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+พวกเราคาดหวังที่จะมี Feature ที่เพิ่มเติมขึ้นใน Presentation Layer นี้ ได้แก่
 
-### Analyzing the Bundle Size
+- การรองรับการทำข้อสอบในรูปแบบ Adaptive Testing
+- การรองรับการตรวจข้อสอบบน Presentation Layer
+- การมี Dashboard ที่ทำการ Analyze ตัวคะแนนของผู้เข้าสอบที่ผ่าน ๆ มา เพื่อบ่งบอกถึงจุดที่ผู้เข้าสอบนั้นบกพร่อง เพื่อเป็นจุดที่ทำให้บอกผู้เข้าสอบนั้นว่าต้องพัฒนาตนเองในส่วนนี้ต่อไป
+- รองรับการออก Report ผ่านทาง Presentation Layer
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## License
 
-### Making a Progressive Web App
+สัญญาการอนุญาตของซอฟต์แวร์อยู่ภายใต้เงื่อนไขของ [MIT license](/LICENSE)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Contributing
 
-### Advanced Configuration
+พวกเรายินดีที่จะมีคนเข้ามาร่วมพัฒนาด้วย ทุกคนสามารถเปิด Pull request เข้ามาได้ พวกเราจะช่วยกัน Review Code แล้วทำการ Merge Code ของคุณ เพื่อเข้ามาเป็นส่วนหนึ่งของโปรเจ็คนี้
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+คุณสามารถดูวิธีการ Contribute เพิ่มเติมได้ที่ [CONTRIBUTING.md](/CONTRIBUTING.md) จากนั้นทำการเพิ่มชื่อของคุณเข้ามาเป็นส่วนหนึ่งกับพวกเราด้านล่างนี้
 
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/imgrbs">
+        <img src="https://avatars2.githubusercontent.com/u/11602960?u=e08ffeedc189ba4efc87af5452ccc2ca839f0cee&v=4" width="100px;" alt="" /><br />
+        <b>ImagineRabbits</b><br />
+        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=imgrbs" title="Code">💻</a>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/bazsup">
+        <img src="https://avatars2.githubusercontent.com/u/22396258?u=6e1fb78f3196e20d093c98d205debb10ef5e5d4e&v=4" width="100px;" alt="" /><br />
+        <b>Supawit</b><br />
+        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=bazsup" title="Code">💻</a>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/wdrdres3qew5ts21">
+        <img src="https://avatars2.githubusercontent.com/u/25000903?u=622a8832381cbddd89795db393a9e8d5b1e347df&v=4" width="100px;" alt="" /><br />
+        <b>Naomi Lin</b><br />
+        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=wdrdres3qew5ts21" title="Code">💻</a>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/bigzaja4">
+        <img src="https://avatars2.githubusercontent.com/u/24911638?u=3e3e61a6335f335ae16187dff3b4348f660f4ab7&v=4" width="100px;" alt="" /><br />
+        <b>Biggie</b><br />
+        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=bigzaja4" title="Code">💻</a>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/mixkungz">
+        <img src="https://avatars2.githubusercontent.com/u/20185035?u=99b107326654533f94afc5d4524cd4ff31722f2b&v=4" width="100px;" alt="" /><br />
+        <b>
+Phachara Kamthong</b><br />
+        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=mixkungz" title="Code">💻</a>
+      </a>
+    </td>
+  </tr>
+</table>
