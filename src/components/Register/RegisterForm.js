@@ -4,12 +4,13 @@ import { lang } from '../../constants'
 import { PrimaryButton } from '../../elements/PrimaryButton'
 import { useState } from 'react'
 import * as AuthenService from '../../services/authen'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const RegisterForm = () => {
   const [fullname, setFullname] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const history = useHistory()
 
   const handleSubmit = useCallback(() => {
     const data = {
@@ -19,8 +20,9 @@ const RegisterForm = () => {
     }
     AuthenService.signup(data).then(() => {
       alert(lang.th.registerSuccess)
+      history.push('/login')
     })
-  }, [email, fullname, password])
+  }, [email, fullname, history, password])
   return (
     <Form onSubmit={handleSubmit}>
       <Header className='text-center' as="h2">{lang.th.registerTitle}</Header>

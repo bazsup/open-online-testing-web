@@ -1,11 +1,12 @@
 import React from 'react'
 import { Button, Image } from 'semantic-ui-react'
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from '../../constants'
 
 const SocialLogin = () => {
   return (
     <div>
       <div className="my-2">
-        <Button fluid basic>
+        <Button fluid basic as="a" href={GOOGLE_AUTH_URL}>
           <Image
             avatar
             spaced="right"
@@ -16,7 +17,7 @@ const SocialLogin = () => {
         </Button>
       </div>
       <div className="my-2">
-        <Button fluid basic>
+        <Button fluid basic as="a" href={FACEBOOK_AUTH_URL}>
           <Image
             avatar
             spaced="right"

@@ -15,6 +15,7 @@ import { JWT_TOKEN } from './constants'
 import ProtectedRoute from './components/ProtectedRoute'
 import NotFound from './components/NotFound'
 import UnAuthenticatedRoute from './components/UnAuthenticatedRoute'
+import Oauth2RedirectHandler from './pages/oauth2RedirectHandler'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -29,15 +30,19 @@ function App() {
   useEffect(() => {
     const userJwtToken = localStorage.getItem(JWT_TOKEN)
     if (userJwtToken) {
-      const decodedJwt = JwtDecode(userJwtToken)
-      const isTokenExpired = Date.now() >= decodedJwt.exp * 1000
-      if (isTokenExpired) {
-        localStorage.removeItem(JWT_TOKEN)
-        return
-      }
+      try {
+        const decodedJwt = JwtDecode(userJwtToken)
+        const isTokenExpired = Date.now() >= decodedJwt.exp * 1000
+        if (isTokenExpired) {
+          localStorage.removeItem(JWT_TOKEN)
+          return
+        }
 
-      AuthenService.setToken(userJwtToken)
-      fetchUser()
+        AuthenService.setToken(userJwtToken)
+        fetchUser()
+      } catch (error) {
+        // ignore error
+      }
     }
   }, [fetchUser])
 
@@ -61,20 +66,36 @@ function App() {
                 isAuthenticated={isAuthenticated}
                 loadUser={fetchUser}
               />
-              <UnAuthenticatedRoute path="/register" component={RegisterPage} />
-              <ProtectedRoute path="/manage" exact component={ManagePage} />
+              <UnAuthenticatedRoute
+                path="/register"
+                component={RegisterPage}
+                isAuthenticated={isAuthenticated}
+              />
+              <ProtectedRoute
+                path="/manage"
+                exact
+                component={ManagePage}
+                isAuthenticated={isAuthenticated}
+              />
               <ProtectedRoute
                 path="/manage/exam"
                 exact
                 component={ManageExamPage}
+                isAuthenticated={isAuthenticated}
               />
               <ProtectedRoute
                 path="/manage/question/create"
                 component={CreateQuestionPage}
+                isAuthenticated={isAuthenticated}
               />
               <ProtectedRoute
                 path="/manage/exam/create"
                 component={CreateExamPage}
+                isAuthenticated={isAuthenticated}
+              />
+              <Route
+                path="/oauth2/redirect"
+                component={Oauth2RedirectHandler}
               />
               <Route component={NotFound} />
             </Switch>

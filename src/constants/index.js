@@ -8,6 +8,17 @@ export const color = {
 
 export const JWT_TOKEN = 'jwtToken'
 
+const API_BASE_URL = process.env.REACT_APP_BASE_API_URL
+
+const getBaseUrl = () => {
+  return (window && window.location.origin) || 'http://localhost:3000'
+}
+
+const OAUTH_REDIRECT_URI = getBaseUrl() + '/oauth2/redirect'
+ 
+export const GOOGLE_AUTH_URL = API_BASE_URL + '/oauth2/authorize/google?redirect_uri=' + OAUTH_REDIRECT_URI
+export const FACEBOOK_AUTH_URL = API_BASE_URL + '/oauth2/authorize/facebook?redirect_uri=' + OAUTH_REDIRECT_URI 
+
 export const lang = {
   th: {
     // common
