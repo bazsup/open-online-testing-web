@@ -4,7 +4,7 @@
 
 ## Demo
 
-depa-frontend.devopcultures.tk
+https://depa.opencloudnative.online/
 
 ## Usage
 
@@ -12,9 +12,17 @@ depa-frontend.devopcultures.tk
 - เรามีวิธีบริหาร State ในการจัดการข้อมูลเพื่อใช้ในการสร้างข้อสอบ
 - เรามีวิธีการวาง Structure ของโปรเจ็คที่คาดว่าน่าจะเป็นประโยชน์สำหรับการนำไปทดลองใช้
 
+## Project Architecture
+
+- 1 Backend รองรับหลาย ๆ Frontend ได้
+- 1 Frontend รองรับหลาย ๆ หน่วยงานได้
+- Frontend กับ Backend อยู่ Server เดียวกันหรือต่างกันก็ได้
+
+![Overview Testing System  - ServiceType](https://user-images.githubusercontent.com/22396258/93670573-84668000-fac6-11ea-957f-d2a82a84913b.png)
+
 ## Get Started
 
-1. ทำการ Clone Project<br>
+1. ทำการ Clone Project
 
 ```sh
 $ git clone https://github.com/bazsup/depa-testing-frontend.git
@@ -34,9 +42,17 @@ $ yarn
 $ npm install
 ```
 
-\*หากไม่มี npm สามารถดาวโหลด nodejs เพื่อมาติดตั้งได้ที่ https://nodejs.org/en/download/
+\*หากไม่มี npm สามารถดาวโหลด nodejs มาติดตั้ง โดยทำการดาวโหลดได้ที่ https://nodejs.org/en/download/
 
-3. หลังจากทำการลง Dependency เรียบร้อยแล้วสามารถเปิดโปรเจ็คขึ้นมาด้วยคำสั่ง
+3. ทำการสร้างไฟล์ file `.env` ใน root project และทำการ COPY ค่าจาก `.env.example` มาไว้ที่ไฟล์ `.env` หรือใช้คำสั่งด้านล่าง
+
+```sh
+$ cp .env.example .env
+```
+
+4. ทำการตั้งค่า `REACT_APP_BASE_API_URL` ในไฟล์ `.env` เพื่อบ่งบอก Project ว่าจะต้องคุยกับ Backend ที่ URL อะไร เช่น https://api.opencloudnative.online/
+
+5. เปิดโปรเจ็คขึ้นมาด้วยคำสั่ง
 
 ```sh
 $ yarn start
