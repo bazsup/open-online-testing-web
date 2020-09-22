@@ -118,12 +118,8 @@ const ScrollableQuestionList = ({
   icon
 }) => (
   <div className="col-6">
-    <div>
+    <div className='mb-3'>
       <strong>{title} {`(${questions.length})`}</strong>
-      <Search
-        className='my-3'
-        onSearchChange={handleSearch}
-      />
     </div>
     <ScrollablePane>
       <QuestionList
