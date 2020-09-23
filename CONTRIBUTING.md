@@ -68,6 +68,16 @@ We highly emphasize in `(S)ingle Responsibility` in `S.O.L.I.D Principle` and `(
 
 For `Single Responsibility` we design each component to 2 parts, you can see `container.js` and `index.js` in each component directory. `container.js` stores the logic (API also called here) of the component and `index.js` is a presentation file so this is a dump components that we will pass props to here and it's will show the data
 
+## Commit Message Guideline
+
+We have commit style guide in this project
+
+Start commit message with [gitmoji](https://gitmoji.carloscuesta.me/) follow by with what you do. Each emoji has a meaning and it will help other people easy to understand what you involve with
+
+e.g. `🐛 Form was sent without validation after press enter button`.
+
+In this case it's mean you work around with the bug and bug is form send without validation
+
 ## Sending a Pull Request
 
 We proudly to have a contributer, you can clone this project then `create new branch` and developed then `open pull request` to `master` branch.
