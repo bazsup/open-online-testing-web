@@ -75,11 +75,14 @@ export default () => {
   const onSubmit = (data) => {
     data.categories = categories
     data.type = type
-    data.choices.forEach(
-      (choice, index) =>
-        (choice.isCorrectAnswer = fields[index].isCorrectAnswer)
-    )
-
+    if (type === QUESTIONTYPE.OBJECTIVE) {
+      data.choices.forEach(
+        (choice, index) =>
+          (choice.isCorrectAnswer = fields[index].isCorrectAnswer)
+      )
+    } else {
+      delete data.choices
+    }
     questionService
       .createQuestion(data)
       .then(() => {
