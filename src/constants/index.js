@@ -15,9 +15,11 @@ const getBaseUrl = () => {
 }
 
 const OAUTH_REDIRECT_URI = getBaseUrl() + '/oauth2/redirect'
- 
-export const GOOGLE_AUTH_URL = API_BASE_URL + '/oauth2/authorize/google?redirect_uri=' + OAUTH_REDIRECT_URI
-export const FACEBOOK_AUTH_URL = API_BASE_URL + '/oauth2/authorize/facebook?redirect_uri=' + OAUTH_REDIRECT_URI 
+
+export const GOOGLE_AUTH_URL =
+  API_BASE_URL + '/oauth2/authorize/google?redirect_uri=' + OAUTH_REDIRECT_URI
+export const FACEBOOK_AUTH_URL =
+  API_BASE_URL + '/oauth2/authorize/facebook?redirect_uri=' + OAUTH_REDIRECT_URI
 
 export const lang = {
   th: {
@@ -33,14 +35,15 @@ export const lang = {
     doesNotHaveAnAccount: 'ยังไม่มีบัญชี?',
     or: 'หรือ',
     clickToRegister: 'คลิกเพื่อลงทะเบียน',
-    
+
     // register page
     register: 'ลงทะเบียน',
     fullname: 'ชื่อ-นามสกุล',
     registerTitle: 'ลงทะเบียนฟรี!',
     registerSuccess: `ลงทะเบียนสำเร็จ`,
     alreadyHaveAccount: 'มีบัญชีอยู่แล้ว?',
-    passwordHint: 'รหัสผ่านต้องประกอบด้วย ตัวอักษรทั้งพิมพ์เล็ก พิมพ์ใหญ่ และตัวเลขผสมกัน ความยาวไม่น้อยกว่า 8 ตัวอักษร',
+    passwordHint:
+      'รหัสผ่านต้องประกอบด้วย ตัวอักษรทั้งพิมพ์เล็ก พิมพ์ใหญ่ และตัวเลขผสมกัน ความยาวไม่น้อยกว่า 8 ตัวอักษร',
     passwordHintCheckList: ['ตัวอักษร (a-z, A-Z)', 'ตัวเลข (0-9)'],
 
     // header
@@ -48,8 +51,9 @@ export const lang = {
     logout: 'ออกจากระบบ',
 
     // error
-    invalidEmailOrPassword: '⚠️ อีเมลหรือรหัสผ่านไม่ถูกต้อง'
-  }
+    invalidEmailOrPassword: '⚠️ อีเมลหรือรหัสผ่านไม่ถูกต้อง',
+  },
+}
 export const QUESTIONTYPE = {
   OBJECTIVE: 'OBJECTIVE',
   SUBJECTIVE: 'SUBJECTIVE',
