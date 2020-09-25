@@ -24,6 +24,10 @@ code {
     monospace;
 }
 
+a {
+  text-decoration: none !important;
+}
+
 /* Inline ant-design */
 .ant-message-custom-content {
   display: flex;

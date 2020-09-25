@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Login from './pages/login'
+import ExamPage from './pages/exam'
 import ManagePage from './pages/manage'
 import ManageExamPage from './pages/manageExam'
 import CreateQuestionPage from './pages/createQuestion'
@@ -16,6 +17,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import NotFound from './components/NotFound'
 import UnAuthenticatedRoute from './components/UnAuthenticatedRoute'
 import Oauth2RedirectHandler from './pages/oauth2RedirectHandler'
+import api from './api/instance'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -39,6 +41,7 @@ function App() {
         }
 
         AuthenService.setToken(userJwtToken)
+        api.defaults.headers.common['x-user-type'] = 'decodedJwt.user.userType'
         fetchUser()
       } catch (error) {
         // ignore error
@@ -69,6 +72,12 @@ function App() {
               <UnAuthenticatedRoute
                 path="/register"
                 component={RegisterPage}
+                isAuthenticated={isAuthenticated}
+              />
+              <ProtectedRoute
+                path="/exam/:examId"
+                exact
+                component={ExamPage}
                 isAuthenticated={isAuthenticated}
               />
               <ProtectedRoute

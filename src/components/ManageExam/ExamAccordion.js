@@ -12,7 +12,7 @@ const useToggle = (initial = false) => {
   return [active, toggleActive]
 }
 
-export default ({ name, description, questions, categories }) => {
+export default ({ name, description, categories }) => {
   const [active, toggleActive] = useToggle(false)
   return (
     <React.Fragment>
@@ -28,9 +28,7 @@ export default ({ name, description, questions, categories }) => {
           <div>
             {`รายละเอียด: ${description}`}
           </div>
-          <div>
-            {`จำนวนคำถาม: ${questions.length}`}
-          </div>
+
           {categories.length > 0 && <CategoryList categories={categories} />}
         </div>
         <div>
