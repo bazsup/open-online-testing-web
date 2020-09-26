@@ -8,7 +8,7 @@ import * as ExamService from '../services/exam'
 import ManageNavigation from '../components/Manage/ManageNavigation'
 import { SegmentTitle } from '../elements/SegmentTitle'
 import { CallToActionButton } from '../elements/CallToActionButton'
-import ExamAccordion from '../components/ManageExam/ExamAccordion'
+import ExamDetailSegment from '../components/ManageExam/ExamDetailSegment'
 import { useEffect } from 'react'
 import { useState } from 'react'
 
@@ -39,11 +39,11 @@ const ExamList = () => {
                 <WithEmpty
                   items={exams}
                   children={(items) => (
-                    <Accordion fluid styled>
+                    <Segment.Group>
                       {items.map((item) => (
-                        <ExamAccordion key={item.id} {...item} />
+                        <ExamDetailSegment key={item.id} {...item} />
                       ))}
-                    </Accordion>
+                    </Segment.Group>
                   )}
                 />
               </div>
