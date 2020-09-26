@@ -32,7 +32,7 @@ then you will see the site in `localhost:3000`
 located in root folder
 
 ```
-depa-testing-frontend
+open-online-testing-web
 ├── src
 │   ├── ...
 │   ├── api
