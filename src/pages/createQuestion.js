@@ -88,7 +88,7 @@ export default (props) => {
       .then(() => {
         toast.success('สร้างคำถามสำเร็จ')
         reset()
-        props.history.push('/manage/question')
+        props.history.push('/manage/')
       })
       .catch((error) => {
         toast.error('สร้างคำถามไม่สำเร็จ กรุณาลองใหม่อีกครั้ง')

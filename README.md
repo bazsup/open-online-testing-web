@@ -52,7 +52,9 @@ $ cp .env.example .env
 
 4. ทำการตั้งค่า `REACT_APP_BASE_API_URL` ในไฟล์ `.env` เพื่อบ่งบอก Project ว่าจะต้องคุยกับ Backend ที่ URL อะไร เช่น https://api.opencloudnative.online/
 
-5. เปิดโปรเจ็คขึ้นมาด้วยคำสั่ง
+5. ทำการตั้งค่า `REACT_APP_BASE_APP_URL` ในไฟล์ `.env` เพื่อบ่งบอก Frontend Project URL
+
+6. เปิดโปรเจ็คขึ้นมาด้วยคำสั่ง
 
 ```sh
 $ yarn start

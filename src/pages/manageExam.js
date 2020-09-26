@@ -14,7 +14,6 @@ import { useState } from 'react'
 
 const ExamList = () => {
   const [exams, setExams] = useState([])
-
   useEffect(() => {
     const fetchExams = async () => {
       const result = await ExamService.getAll()
@@ -22,29 +21,27 @@ const ExamList = () => {
     }
     fetchExams()
   }, [])
+
   return (
     <React.Fragment>
       <ManageNavigation />
-      <div className='row justify-content-md-center mt-3'>
+      <div className="row justify-content-md-center mt-3">
         <div className="col-10">
-          <Segment className='px-5 py-5'>
+          <Segment className="px-5 py-5">
             <div className="row">
               <div className="col-12">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <SegmentTitle>จัดการข้อสอบ</SegmentTitle>
-                  <Link to='/manage/exam/create'>
-                    <CallToActionButton content='+ สร้างข้อสอบ' />
+                  <Link to="/manage/exam/create">
+                    <CallToActionButton content="+ สร้างข้อสอบ" />
                   </Link>
                 </div>
                 <WithEmpty
                   items={exams}
                   children={(items) => (
                     <Accordion fluid styled>
-                      {items.map(item => (
-                        <ExamAccordion
-                          key={item.id}
-                          {...item}
-                        />
+                      {items.map((item) => (
+                        <ExamAccordion key={item.id} {...item} />
                       ))}
                     </Accordion>
                   )}
@@ -58,13 +55,13 @@ const ExamList = () => {
   )
 }
 
-
 const WithEmpty = ({ items, children }) => {
-  if (items.length === 0) return (
-    <Segment>
-      <Empty />
-    </Segment>
-  )
+  if (items.length === 0)
+    return (
+      <Segment>
+        <Empty />
+      </Segment>
+    )
   return children(items)
 }
 
