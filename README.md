@@ -1,4 +1,4 @@
-# Depa Testing Frontend (Intro)
+# Open Online Testing Web (Intro)
 
 โปรเจ็คนี้จัดทำขึ้นมาเพื่อเป็นตัวอย่างของหน้าเว็บไซต์ที่เป็นส่วนของ Presentation Layer ถูกพัฒนาด้วย React.js
 
