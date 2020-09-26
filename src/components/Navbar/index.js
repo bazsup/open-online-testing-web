@@ -41,7 +41,7 @@ export default ({ isAuthenticated, setIsAuthenticated }) => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          ดีป้าล่ะ
+          Open Online Testing Web
         </Link>
         <button
           className="navbar-toggler"

@@ -1,6 +1,6 @@
-# Contributing to depa testing frontend
+# Contributing to Open Online Testing Web
 
-Welcome to depa-testing-frontend, these are guidelines that will help you get the picture and understand how to contribute to this project. Let's do it.
+Welcome to Open Online Testing Web, these are guidelines that will help you get the picture and understand how to contribute to this project. Let's do it.
 
 ### Table of Contents
 
@@ -14,7 +14,7 @@ Welcome to depa-testing-frontend, these are guidelines that will help you get th
 
 ## Code of Conduct
 
-depa testing frontend has adopted the [Contributor Covenant](https://www.contributor-covenant.org/) as its Code of Conduct, and we expect project participants to adhere to it.
+Open Online Testing Web has adopted the [Contributor Covenant](https://www.contributor-covenant.org/) as its Code of Conduct, and we expect project participants to adhere to it.
 Please read [the full content](/CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
 
 ## Development Steps
