@@ -18,7 +18,7 @@ const RadioButton = styled(Radio.Button)`
   }
 `
 
-export default () => {
+export default (props) => {
   const [type, setType] = useState(QUESTIONTYPE.OBJECTIVE)
   const [categories, setCategories] = useState([])
 
@@ -88,6 +88,7 @@ export default () => {
       .then(() => {
         toast.success('สร้างคำถามสำเร็จ')
         reset()
+        props.history.push('/manage/question')
       })
       .catch((error) => {
         toast.error('สร้างคำถามไม่สำเร็จ กรุณาลองใหม่อีกครั้ง')
@@ -103,7 +104,7 @@ export default () => {
         <Segment>
           <Controller
             control={control}
-            name='name'
+            name="name"
             rules={{ required: true, minLength: 5 }}
             as={
               <Form.Input
@@ -112,7 +113,7 @@ export default () => {
                   errors.name.type === 'minLength' &&
                   'คำถามจำเป็นต้องมีจำนวนตัวอักษรจำนวน 5 ตัวอักษรขึ้นไป'
                 }
-                label='คำถาม'
+                label="คำถาม"
               />
             }
           />
@@ -120,7 +121,7 @@ export default () => {
             <label>ประเภทคำถาม</label>
             <Radio.Group
               defaultValue={QUESTIONTYPE.OBJECTIVE}
-              buttonStyle='solid'
+              buttonStyle="solid"
               onChange={(e) => setType(e.target.value)}
             >
               <RadioButton
@@ -151,10 +152,10 @@ export default () => {
             ))}
           {type === QUESTIONTYPE.OBJECTIVE && (
             <Button
-              type='button'
-              icon='plus'
-              size='tiny'
-              className='mb-2'
+              type="button"
+              icon="plus"
+              size="tiny"
+              className="mb-2"
               onClick={() => append({ label: '', isCorrectAnswer: false })}
             />
           )}
@@ -162,7 +163,7 @@ export default () => {
             title={'ประเภทของคำถาม'}
             onCategoriesChange={handleCategoriesChange}
           />
-          <Button type='submit' color='orange' className='mt-3'>
+          <Button type="submit" color="orange" className="mt-3">
             สร้างคำถาม
           </Button>
         </Segment>
