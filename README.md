@@ -25,7 +25,7 @@ https://depa.opencloudnative.online/
 1. ทำการ Clone Project
 
 ```sh
-$ git clone https://github.com/bazsup/depa-testing-frontend.git
+$ git clone https://github.com/bazsup/open-online-testing-web.git
 ```
 
 หรือทำการ Download as zip ก็ได้เช่นกัน
@@ -93,28 +93,28 @@ $ npm start
       <a href="https://github.com/imgrbs">
         <img src="https://avatars2.githubusercontent.com/u/11602960?u=e08ffeedc189ba4efc87af5452ccc2ca839f0cee&v=4" width="100px;" alt="" /><br />
         <b>ImagineRabbits</b><br />
-        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=imgrbs" title="Code">💻</a>
+        <a href="https://github.com/imgrbs/open-online-testing-web/commits?author=imgrbs" title="Code">💻</a>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/bazsup">
         <img src="https://avatars2.githubusercontent.com/u/22396258?u=6e1fb78f3196e20d093c98d205debb10ef5e5d4e&v=4" width="100px;" alt="" /><br />
         <b>Supawit</b><br />
-        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=bazsup" title="Code">💻</a>
+        <a href="https://github.com/imgrbs/open-online-testing-web/commits?author=bazsup" title="Code">💻</a>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/wdrdres3qew5ts21">
         <img src="https://avatars2.githubusercontent.com/u/25000903?u=622a8832381cbddd89795db393a9e8d5b1e347df&v=4" width="100px;" alt="" /><br />
         <b>Naomi Lin</b><br />
-        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=wdrdres3qew5ts21" title="Code">💻</a>
+        <a href="https://github.com/imgrbs/open-online-testing-web/commits?author=wdrdres3qew5ts21" title="Code">💻</a>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/bigzaja4">
         <img src="https://avatars2.githubusercontent.com/u/24911638?u=3e3e61a6335f335ae16187dff3b4348f660f4ab7&v=4" width="100px;" alt="" /><br />
         <b>Biggie</b><br />
-        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=bigzaja4" title="Code">💻</a>
+        <a href="https://github.com/imgrbs/open-online-testing-web/commits?author=bigzaja4" title="Code">💻</a>
       </a>
     </td>
     <td align="center">
@@ -122,7 +122,7 @@ $ npm start
         <img src="https://avatars2.githubusercontent.com/u/20185035?u=99b107326654533f94afc5d4524cd4ff31722f2b&v=4" width="100px;" alt="" /><br />
         <b>
 Phachara Kamthong</b><br />
-        <a href="https://github.com/imgrbs/depa-testing-api/commits?author=mixkungz" title="Code">💻</a>
+        <a href="https://github.com/imgrbs/open-online-testing-web/commits?author=mixkungz" title="Code">💻</a>
       </a>
     </td>
   </tr>
