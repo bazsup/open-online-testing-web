@@ -1,5 +1,5 @@
 import React from 'react'
-import { Segment, Accordion } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { Empty } from 'antd'
 

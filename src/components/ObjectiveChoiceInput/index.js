@@ -9,9 +9,9 @@ export default ({
   setIsCorrectAnswerTo,
 }) => {
   return (
-    <div className='d-flex my-3'>
-      <Form.Field className='flex-grow-1 m-0'>
-        <Input labelPosition='left' type='text'>
+    <div className="d-flex my-3">
+      <Form.Field className="flex-grow-1 m-0">
+        <Input labelPosition="left" type="text">
           <Label basic color={choice.isCorrectAnswer && 'teal'}>
             {index + 1}
           </Label>
@@ -19,30 +19,30 @@ export default ({
             name={`choices[${index}].label`}
             defaultValue={choice.label}
             required
-            ref={register}
+            ref={register()}
           />
         </Input>
       </Form.Field>
 
-      <Button.Group className='px-2'>
+      <Button.Group className="px-2">
         <Button
-          type='button'
+          type="button"
           icon
           onClick={() => setIsCorrectAnswerTo(false, index)}
         >
-          <Icon name='times' />
+          <Icon name="times" />
         </Button>
         <Button
-          type='button'
+          type="button"
           icon
           onClick={() => setIsCorrectAnswerTo(true, index)}
         >
-          <Icon name='check' />
+          <Icon name="check" />
         </Button>
       </Button.Group>
       <Button
-        type='button'
-        icon='trash'
+        type="button"
+        icon="trash"
         onClick={() => handleChoiceRemove(index)}
       />
     </div>

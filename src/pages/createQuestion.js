@@ -46,16 +46,19 @@ export default (props) => {
     name: 'choices',
   })
 
-  const setIsCorrectAnswerTo = (value, selectedIndex) => {
-    setValue(
-      `choices`,
-      fields.forEach((field, index) => {
+  const setIsCorrectAnswerTo = useCallback(
+    (value, selectedIndex) => {
+      const newChoices = fields.map((field, index) => {
         if (selectedIndex === index) {
           field.isCorrectAnswer = value
         }
+        field.label = getValues().choices[index].label
+        return field
       })
-    )
-  }
+      setValue(`choices`, newChoices)
+    },
+    [getValues, setValue, fields]
+  )
 
   const handleCategoriesChange = useCallback(
     (categories) => {
