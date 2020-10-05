@@ -2,17 +2,22 @@
 
 โปรเจ็คนี้จัดทำขึ้นมาเพื่อเป็นตัวอย่างของหน้าเว็บไซต์ที่เป็นส่วนของ Presentation Layer ถูกพัฒนาด้วย React.js
 
-## Demo
+## ตัวอย่าง
 
 https://depa.opencloudnative.online/
 
-## Usage
+### ระบบนี้ประกอบด้วย 2 ส่วนใหญ่ ๆ คือ
+
+1. Backend Service - ให้บริการตาม function ของระบบ depa testing ทั้งหมด แต่จะไม่มีส่วนของ User Interface (UI) จะขอเรียกส่วนนี้ว่า [Open Online Testing Service - API](https://github.com/imgrbs/open-online-testing-api)
+2. Frontend Service - เป็น User Interface ของระบบซึ่งเรียกใช้ Backend Service เพื่อให้บริการแก่ User จะขอเรียกส่วนนี้ว่า [Open Online Testing Service - Web](https://github.com/bazsup/open-online-testing-web)
+
+## การใช้งาน
 
 - เรามีตัวอย่างในการ Login ด้วย Social media ต่าง ๆ
 - เรามีวิธีบริหาร State ในการจัดการข้อมูลเพื่อใช้ในการสร้างข้อสอบ
 - เรามีวิธีการวาง Structure ของโปรเจ็คที่คาดว่าน่าจะเป็นประโยชน์สำหรับการนำไปทดลองใช้
 
-## Project Architecture
+## โครงสร้างระบบ
 
 - 1 Backend รองรับหลาย ๆ Frontend ได้
 - 1 Frontend รองรับหลาย ๆ หน่วยงานได้
@@ -20,7 +25,7 @@ https://depa.opencloudnative.online/
 
 ![Overview Testing System  - ServiceType](https://user-images.githubusercontent.com/22396258/93670573-84668000-fac6-11ea-957f-d2a82a84913b.png)
 
-## Get Started
+## เริ่มต้นการใช้งาน
 
 1. ทำการ Clone Project
 
