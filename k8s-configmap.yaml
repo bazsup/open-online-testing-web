@@ -16,7 +16,7 @@ data:
       }
 
       location /api/ {
-        proxy_pass  http://depa-backend-service/;
+        proxy_pass  http://depa-backend-service:8080/;
         proxy_http_version 1.1;
         proxy_set_header Connection "";
       }
