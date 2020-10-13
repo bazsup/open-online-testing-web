@@ -4,12 +4,10 @@ metadata:
   name: depa-frontend-service
   labels:
     app: depa-frontend
-    version: dev
 spec:
   type: ClusterIP
   selector:
     app: depa-frontend
-    version: dev
   ports:
   - name: http
     protocol: TCP
