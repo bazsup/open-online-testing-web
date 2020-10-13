@@ -84,6 +84,8 @@ $ npm start
 พวกเรายินดีที่จะมีคนเข้ามาร่วมพัฒนาด้วย ทุกคนสามารถเปิด Pull request เข้ามาได้ พวกเราจะช่วยกัน Review Code แล้วทำการ Merge Code ของคุณ เพื่อเข้ามาเป็นส่วนหนึ่งของโปรเจ็คนี้
 
 คุณสามารถดูวิธีการ Contribute เพิ่มเติมได้ที่ [CONTRIBUTING.md](/CONTRIBUTING.md) จากนั้นทำการเพิ่มชื่อของคุณเข้ามาเป็นส่วนหนึ่งกับพวกเราด้านล่างนี้
+## Infrastructure
+Deployment นั้นจะมี Component สำหรับใช้ในการดึง ConfigMap มาใช้เป็น Environment หรือการทำ ReverseProxy ให้
 
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->

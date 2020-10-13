@@ -8,7 +8,7 @@ pipeline {
         AZ_AKZ_USER = credentials('AZ_AKZ_USER')
         AZ_AKZ_PASSWORD = credentials('AZ_AKZ_PASSWORD')
         AZ_AKZ_TENANT = credentials('AZ_AKZ_TENANT')
-        CONTAINER_IMAGE = 'dev/depa-frontend'
+        CONTAINER_IMAGE = 'linxianer12/open-online-testing-web'
         AZ_AKS_NAME = "kube-devops"
         AZ_AKS_RESOUCE_GROUP = "Elasticsearch-Stack"
         // ชื่อของเครื่องที่ต้องการจะ Hold Approve ก่อนที่จะ Deploy ขึ้นไป
