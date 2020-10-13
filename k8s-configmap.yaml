@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: depa-frontend-nginx-config
 data:
-  REACT_APP_BASE_API_URL: "depa-frontend-service"
+  REACT_APP_BASE_API_URL: "depa-frontend-service/api"
   default.conf: |
     server {
       listen       80;
