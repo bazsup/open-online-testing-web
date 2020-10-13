@@ -74,6 +74,7 @@ pipeline {
                     sh 'echo ==='
                     sh "yarn add react-scripts"
                     sh "echo REACT_APP_BASE_API_URL=${REACT_APP_BASE_API_URL} > .env"
+                    sh "cat .env"
                     sh 'yarn build'
                     // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
                     stash name: 'static-artifact', includes: 'build/'
