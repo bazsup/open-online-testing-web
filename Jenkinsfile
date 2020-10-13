@@ -46,6 +46,7 @@ pipeline {
                         parameters : [
                             choice(name: 'TAG_VERSION', choices: "${git_tags}", description: 'เลือก Tags ที่ต้องการ'),
                             text(name: 'BUILD_ID', defaultValue:"${BUILD_ID}"),
+                            text(name: 'LABEL_VERSION',defaultValue: getServerEnvironmentList()[0], description: 'Label ของ Application ที่ใช้กับ Kubernetes(เพื่อทำ traffic selector)'),
                             choice(name: 'SERVER_ENVIRONMENT', choices: getServerEnvironmentList(), description: 'เลือก Server Enviroment'),
                         ]
                     }
@@ -53,6 +54,7 @@ pipeline {
                     env.BUILD_BRANCH = ''
                     env.SERVER_ENVIRONMENT = input_params.SERVER_ENVIRONMENT
                     env.TAG_VERSION = input_params.TAG_VERSION
+                    env.LABEL_VERSION = input_params.LABEL_VERSION
                 }
             }
         }
@@ -157,6 +159,8 @@ pipeline {
                     // สั่ง apply resource ไปยัง K8S
                     sh "echo =========================================="
                     sh "echo ============ Deploy to Kubernetes to ${env.SERVER_ENVIRONMENT} API ============="
+                    // กำหนด Labels Tag ของ App
+                    sh "sed -i 's/LABEL_VERSION/${env.LABEL_VERSION}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
                     // apply config map
                     sh "kubectl apply -f ${env.K8S_CONFIG_YAML_PROFILE}"
                     // สร้าง Deployment Resouce
