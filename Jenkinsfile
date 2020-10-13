@@ -13,6 +13,7 @@ pipeline {
         AZ_AKS_RESOUCE_GROUP = "Elasticsearch-Stack"
         // ชื่อของเครื่องที่ต้องการจะ Hold Approve ก่อนที่จะ Deploy ขึ้นไป
         PRODUCTION_SERVER = "PROD"
+        
     }
 
     stages {
@@ -89,9 +90,9 @@ pipeline {
                     sh 'echo ============= Build Docker Image and Push ==================='
                     unstash 'static-artifact'
                     sh "ls"
-                    def FULL_CONTAINER_IMAGE_PATH = "${AZ_CONTAINER_REGISTRY_URL}/${CONTAINER_IMAGE}:${env.TAG_VERSION}"
+                    def FULL_CONTAINER_IMAGE_PATH = "${CONTAINER_IMAGE}:${env.TAG_VERSION}"
                     env.FULL_CONTAINER_IMAGE_PATH = FULL_CONTAINER_IMAGE_PATH.replaceAll('/', "\\\\/")
-                    docker.withRegistry("https://${AZ_CONTAINER_REGISTRY_URL}", '77ae6c02-d40b-4bae-82bf-ade4eeff03e3') {
+                    docker.withRegistry("", '2846f756-a434-495b-852b-8922980f769d') {
                         def newApp = docker.build "${env.FULL_CONTAINER_IMAGE_PATH}"
                         newApp.push()
                     }
@@ -152,11 +153,7 @@ pipeline {
                     }
                     env.K8S_CONFIG_YAML_PROFILE = "k8s-configmap.yaml"
                      // ใช้กำหนด docker image ที่จะรัน pod
-                    sh "sed -i 's/AZ_CONTAINER_REGISTRY_URL/${AZ_CONTAINER_REGISTRY_URL}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
-                    sh "sed -i 's/IMAGE_GIT_BRANCH-/${env.BUILD_BRANCH}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
                     sh "sed -i 's/IMAGE_BUILD_ID/${env.TAG_VERSION}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
-                    // กำหนด change cause ของ rollout history
-                    sh "sed -i 's/ENV_CHANGE_CAUSE_MESSAGE/[IMAGE] ${env.FULL_CONTAINER_IMAGE_PATH} - ${env.COMMIT_MESSAGE}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
                     // สั่ง apply resource ไปยัง K8S
                     sh "echo =========================================="
                     sh "echo ============ Deploy to Kubernetes to ${env.SERVER_ENVIRONMENT} API ============="
@@ -164,6 +161,8 @@ pipeline {
                     sh "kubectl apply -f ${env.K8S_CONFIG_YAML_PROFILE}"
                     // สร้าง Deployment Resouce
                     sh "kubectl apply -f ${env.K8S_DEPLOY_YAML_PROFILE}"
+                     // กำหนด change cause ของ rollout history
+                    sh "sed -i 's/ENV_CHANGE_CAUSE_MESSAGE/[IMAGE] ${env.FULL_CONTAINER_IMAGE_PATH} - ${env.COMMIT_MESSAGE}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
                     // สร้าง Service Resouce สำหรับทำ Service Discovery
                     sh "kubectl apply -f ${env.K8S_SERVICE_YAML_PROFILE} --record=true"
                 }
