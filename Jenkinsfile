@@ -13,7 +13,7 @@ pipeline {
         AZ_AKS_RESOUCE_GROUP = "Elasticsearch-Stack"
         // ชื่อของเครื่องที่ต้องการจะ Hold Approve ก่อนที่จะ Deploy ขึ้นไป
         PRODUCTION_SERVER = "PROD"
-        REACT_APP_BASE_API_URL = "api"
+        REACT_APP_BASE_API_URL = "https://api.opencloudnative.online"
         
     }
 

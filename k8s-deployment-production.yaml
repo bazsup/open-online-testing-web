@@ -47,12 +47,12 @@ spec:
             path: /
             port: 80
           initialDelaySeconds: 5
-        env:
-        - name: REACT_APP_BASE_API_URL
-          valueFrom:
-            configMapKeyRef:
-              name: depa-frontend-nginx-config
-              key: REACT_APP_BASE_API_URL
+        # env:
+        # - name: REACT_APP_BASE_API_URL
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: depa-frontend-nginx-config
+        #       key: REACT_APP_BASE_API_URL
         resources:
           limits:
             memory: "256Mi"
