@@ -86,6 +86,7 @@ $ npm start
 คุณสามารถดูวิธีการ Contribute เพิ่มเติมได้ที่ [CONTRIBUTING.md](/CONTRIBUTING.md) จากนั้นทำการเพิ่มชื่อของคุณเข้ามาเป็นส่วนหนึ่งกับพวกเราด้านล่างนี้
 ## Infrastructure
 Deployment นั้นจะมี Component สำหรับใช้ในการดึง ConfigMap มาใช้เป็น Environment หรือการทำ ReverseProxy ให้
+เวลาเรา Build ใน environmnet ของ Jenkins Pipeline จะได้ ENV ไปดว้ยเช่นกันดังนั้นเราจึงสามารถใช้ควบคุ๋กับ process.env ได้เลยเมือนว่ากำลัง Build อยู่บนคอมเราจริงๆอีกด้วย
 
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
