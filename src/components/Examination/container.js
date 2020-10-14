@@ -1,43 +1,82 @@
-import React, { useState } from 'react'
-import dayjs from 'dayjs'
+import React, { useEffect, useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
 
-import { toast } from '../../libs/toast'
 import Examination from './index'
-import ExaminationWaitingRoom from '../ExaminationWaitingRoom'
+import { toast } from '../../libs/toast'
+import * as examinationService from '../../services/examination'
+import { Loader } from 'semantic-ui-react'
 
 export default function ExaminationContainer({ examDetail }) {
-  const [isEnterExamRoom, setIsEnterExamRoom] = useState(false)
-  const [isAgreeTerm, setIsAgreeTerm] = useState(false)
+  const { examId } = useParams()
+  const history = useHistory()
+  const [questions, setQuestions] = useState(null)
+  const [answers, setAnswers] = useState([])
+  const [modalOpen, setModalOpen] = useState(false)
 
-  const handleSetIsEnterExamRoom = () => {
-    const now = dayjs()
-    const examStart = dayjs(examDetail.startAt)
-    const examEnd = dayjs(examDetail.endAt)
-    const canEntryExamRoom = examStart <= now && now <= examEnd
-    const beforeExamTime = now < examStart
-    const afterExamTime = now > examEnd
+  useEffect(() => {
+    examinationService
+      .getExamQuestion(examId)
+      .then((response) => {
+        const {
+          data: { questions },
+        } = response
+        const initialAnswers = Array(questions.length).fill([])
+        setAnswers(initialAnswers)
+        setQuestions(questions)
+      })
+      .catch(() => {
+        toast.error('เกิดข้อผิดพลาดในการดึงข้อสอบ กรุณาลองใหม่ในภายหลัง')
+        history.push('/')
+      })
+  }, [examDetail, examId, history])
 
-    if (beforeExamTime) {
-      toast.error('ไม่สามารถเข้าสู่ห้องสอบก่อนเวลาได้')
-    }
-    if (afterExamTime) {
-      toast.error('การสอบสิ้นสุดลงแล้ว')
-    }
-    if (canEntryExamRoom) {
-      toast.info('เข้าสู่ห้องสอบ')
-      setIsEnterExamRoom(true)
-    }
+  function onChangeAnswer(index, answer) {
+    answers[index] = answer
+    setAnswers(answers)
   }
 
-  if (!isEnterExamRoom) {
-    return (
-      <ExaminationWaitingRoom
-        examDetail={examDetail}
-        isAgreeTerm={isAgreeTerm}
-        setIsAgreeTerm={setIsAgreeTerm}
-        handleSetIsEnterExamRoom={handleSetIsEnterExamRoom}
-      />
-    )
+  function getFormatedAnswer() {
+    return answers.map((answer, answerIndex) => {
+      const question = questions[answerIndex]
+      return {
+        questionId: question.id,
+        questionName: question.name,
+        questionType: question.type,
+        answer,
+      }
+    })
   }
-  return <Examination examDetail={examDetail} />
+
+  function onCounterEnd() {
+    toast.info('การทำข้อสอบจบลงแล้ว ระบบกำลังส่งคำตอบให้คุณอัตโนมัติ')
+    submitExam()
+  }
+
+  function submitExam() {
+    const answers = getFormatedAnswer()
+    examinationService
+      .submitExamination(examId, answers)
+      .then(() => {
+        toast.success('ทำการส่งคำตอบเรียบร้อย')
+        history.push('/')
+      })
+      .catch(() => toast.error('เกิดปัญหาในการส่งคำตอบ กรุณาลองใหม่อีกครั้ง'))
+  }
+
+  if (questions === null) {
+    return <Loader />
+  }
+
+  return (
+    <Examination
+      examDetail={examDetail}
+      onCounterEnd={onCounterEnd}
+      questions={questions}
+      answers={answers}
+      onChangeAnswer={onChangeAnswer}
+      submitExam={submitExam}
+      modalOpen={modalOpen}
+      setModalOpen={setModalOpen}
+    />
+  )
 }

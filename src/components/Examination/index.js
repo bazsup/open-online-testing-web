@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import React from 'react'
 import {
   Card,
   Checkbox,
   Radio,
-  Loader,
   Button,
   Header,
   Icon,
@@ -13,8 +11,6 @@ import {
 import styled from '@emotion/styled'
 import { color, QUESTIONTYPE } from '../../constants'
 import { Statistic } from 'antd'
-import { toast } from '../../libs/toast'
-import * as examinationService from '../../services/examination'
 
 const { Countdown } = Statistic
 
@@ -25,67 +21,16 @@ const Info = styled.div`
   font-weight: bold;
 `
 
-export default function Examination({ examDetail }) {
-  const { examId } = useParams()
-  const history = useHistory()
-  const [questions, setQuestions] = useState(null)
-  const [answers, setAnswers] = useState([])
-  const [modalOpen, setModalOpen] = useState(false)
-
-  useEffect(() => {
-    examinationService
-      .getExamQuestion(examId)
-      .then((response) => {
-        const {
-          data: { questions },
-        } = response
-        const initialAnswers = Array(questions.length).fill([])
-        setAnswers(initialAnswers)
-        setQuestions(questions)
-      })
-      .catch(() => {
-        toast.error('เกิดข้อผิดพลาดในการดึงข้อสอบ กรุณาลองใหม่ในภายหลัง')
-        history.push('/')
-      })
-  }, [examDetail, examId, history])
-
-  function onChangeAnswer(index, answer) {
-    answers[index] = answer
-    setAnswers(answers)
-  }
-
-  function getFormatedAnswer() {
-    return answers.map((answer, answerIndex) => {
-      const question = questions[answerIndex]
-      return {
-        questionId: question.id,
-        questionName: question.name,
-        questionType: question.type,
-        answer,
-      }
-    })
-  }
-
-  function onCounterEnd() {
-    toast.info('การทำข้อสอบจบลงแล้ว ระบบกำลังส่งคำตอบให้คุณอัตโนมัติ')
-    submitExam()
-  }
-
-  function submitExam() {
-    const answers = getFormatedAnswer()
-    examinationService
-      .submitExamination(examId, answers)
-      .then(() => {
-        toast.success('ทำการส่งคำตอบเรียบร้อย')
-        history.push('/')
-      })
-      .catch(() => toast.error('เกิดปัญหาในการส่งคำตอบ กรุณาลองใหม่อีกครั้ง'))
-  }
-
-  if (questions === null) {
-    return <Loader />
-  }
-
+export default function Examination({
+  examDetail,
+  onCounterEnd,
+  questions,
+  answers,
+  onChangeAnswer,
+  submitExam,
+  modalOpen,
+  setModalOpen,
+}) {
   return (
     <div>
       <Modal
