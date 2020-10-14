@@ -41,7 +41,7 @@ function App() {
         }
 
         AuthenService.setToken(userJwtToken)
-        api.defaults.headers.common['x-user-type'] = 'decodedJwt.user.userType'
+        api.defaults.headers.common['x-user-type'] = decodedJwt['x-user-type']
         fetchUser()
       } catch (error) {
         // ignore error
