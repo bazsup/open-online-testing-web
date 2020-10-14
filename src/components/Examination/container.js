@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import dayjs from 'dayjs'
 
 import { toast } from '../../libs/toast'
-import ExaminationWaitingRoom from './ExaminationWaitingRoom'
-import ExaminationRoom from './ExaminationRoom'
+import Examination from './index'
+import ExaminationWaitingRoom from '../ExaminationWaitingRoom'
 
 export default function ExaminationContainer({ examDetail }) {
   const [isEnterExamRoom, setIsEnterExamRoom] = useState(false)
@@ -39,5 +39,5 @@ export default function ExaminationContainer({ examDetail }) {
       />
     )
   }
-  return <ExaminationRoom examDetail={examDetail} />
+  return <Examination examDetail={examDetail} />
 }

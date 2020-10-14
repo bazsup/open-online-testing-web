@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from 'react-router-dom'
 import {
   Card,
   Checkbox,
@@ -25,7 +25,7 @@ const Info = styled.div`
   font-weight: bold;
 `
 
-export default function ExaminationRoom({ examDetail }) {
+export default function Examination({ examDetail }) {
   const { examId } = useParams()
   const history = useHistory()
   const [questions, setQuestions] = useState(null)
@@ -33,15 +33,20 @@ export default function ExaminationRoom({ examDetail }) {
   const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
-    examinationService.getExamQuestion(examId).then((response) => {
-      const { data: { questions } } = response
-      const initialAnswers = Array(questions.length).fill([])
-      setAnswers(initialAnswers)
-      setQuestions(questions)
-    }).catch(() => {
-      toast.error('เกิดข้อผิดพลาดในการดึงข้อสอบ กรุณาลองใหม่ในภายหลัง')
-      history.push('/')
-    })
+    examinationService
+      .getExamQuestion(examId)
+      .then((response) => {
+        const {
+          data: { questions },
+        } = response
+        const initialAnswers = Array(questions.length).fill([])
+        setAnswers(initialAnswers)
+        setQuestions(questions)
+      })
+      .catch(() => {
+        toast.error('เกิดข้อผิดพลาดในการดึงข้อสอบ กรุณาลองใหม่ในภายหลัง')
+        history.push('/')
+      })
   }, [examDetail, examId, history])
 
   function onChangeAnswer(index, answer) {
@@ -62,22 +67,23 @@ export default function ExaminationRoom({ examDetail }) {
   }
 
   function onCounterEnd() {
-    toast.info(
-      'การทำข้อสอบจบลงแล้ว ระบบกำลังส่งคำตอบให้คุณอัตโนมัติ'
-    )
+    toast.info('การทำข้อสอบจบลงแล้ว ระบบกำลังส่งคำตอบให้คุณอัตโนมัติ')
     submitExam()
   }
 
   function submitExam() {
     const answers = getFormatedAnswer()
-    examinationService.submitExamination(examId, answers).then(() => {
-      toast.success('ทำการส่งคำตอบเรียบร้อย')
-      history.push('/')
-    }).catch(() => toast.error('เกิดปัญหาในการส่งคำตอบ กรุณาลองใหม่อีกครั้ง'))
+    examinationService
+      .submitExamination(examId, answers)
+      .then(() => {
+        toast.success('ทำการส่งคำตอบเรียบร้อย')
+        history.push('/')
+      })
+      .catch(() => toast.error('เกิดปัญหาในการส่งคำตอบ กรุณาลองใหม่อีกครั้ง'))
   }
 
-  if(questions === null) {
-    return <Loader /> 
+  if (questions === null) {
+    return <Loader />
   }
 
   return (
@@ -87,14 +93,14 @@ export default function ExaminationRoom({ examDetail }) {
         onClose={() => setModalOpen(false)}
         onOpen={() => setModalOpen(true)}
         open={modalOpen}
-        size='small'
-        className='w-100'
+        size="small"
+        className="w-100"
       >
-        <div className='container'>
-          <div className='row justify-content-center'>
-            <div className='col-10'>
-              <Header icon className='text-white'>
-                <Icon name='save' className='text-white' />
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-10">
+              <Header icon className="text-white">
+                <Icon name="save" className="text-white" />
                 ยืนยันการส่งคำตอบ
               </Header>
               <Modal.Content>
@@ -103,37 +109,33 @@ export default function ExaminationRoom({ examDetail }) {
                   หากยืนยันแล้วจะไม่สามารถกลับมาแก้คำตอบได้อีก
                 </p>
               </Modal.Content>
-              <Modal.Actions className='mt-3'>
+              <Modal.Actions className="mt-3">
                 <Button
                   basic
-                  color='red'
+                  color="red"
                   inverted
-                  className='ml-0'
+                  className="ml-0"
                   onClick={() => setModalOpen(false)}
                 >
-                  <Icon name='remove' /> ยกเลิก
+                  <Icon name="remove" /> ยกเลิก
                 </Button>
-                <Button
-                  color='orange'
-                  inverted
-                  onClick={submitExam}
-                >
-                  <Icon name='checkmark' /> ยืนยัน
+                <Button color="orange" inverted onClick={submitExam}>
+                  <Icon name="checkmark" /> ยืนยัน
                 </Button>
               </Modal.Actions>
             </div>
           </div>
         </div>
       </Modal>
-      <Info className='d-flex justify-content-center align-items-center mb-5'>
+      <Info className="d-flex justify-content-center align-items-center mb-5">
         เหลือเวลาทำข้อสอบอีก
         <Countdown
           value={examDetail.endAt}
-          className='ml-2'
+          className="ml-2"
           onFinish={onCounterEnd}
         />
       </Info>
-      <div className='pb-3'>
+      <div className="pb-3">
         <Card.Group>
           {questions.map((question, index) => (
             <QuestionCard
@@ -145,10 +147,10 @@ export default function ExaminationRoom({ examDetail }) {
             />
           ))}
         </Card.Group>
-        <div className='d-flex justify-content-end'>
+        <div className="d-flex justify-content-end">
           <Button
-            color='orange'
-            className='mt-3'
+            color="orange"
+            className="mt-3"
             onClick={() => setModalOpen(true)}
           >
             ส่งคำตอบ
@@ -164,13 +166,13 @@ function QuestionCard({ question, answers, index, onChangeAnswer }) {
 
   if (type === QUESTIONTYPE.SUBJECTIVE) {
     return (
-      <Card fluid color='orange'>
+      <Card fluid color="orange">
         <Card.Content>
           <Card.Header>{name}</Card.Header>
         </Card.Content>
         <Card.Content>
           <textarea
-            className='w-100'
+            className="w-100"
             rows={5}
             onChange={(event) => {
               onChangeAnswer(index, [event.target.value])
@@ -195,7 +197,7 @@ function QuestionCard({ question, answers, index, onChangeAnswer }) {
       onChangeAnswer(index, result)
     }
     return (
-      <Card fluid color='orange'>
+      <Card fluid color="orange">
         <Card.Content>
           <Card.Header>{name}</Card.Header>
         </Card.Content>
@@ -216,7 +218,7 @@ function QuestionCard({ question, answers, index, onChangeAnswer }) {
   }
 
   return (
-    <Card fluid color='orange'>
+    <Card fluid color="orange">
       <Card.Content>
         <Card.Header>{name}</Card.Header>
       </Card.Content>
