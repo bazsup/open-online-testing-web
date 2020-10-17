@@ -8,7 +8,7 @@ import * as ExamService from '../services/exam'
 import ManageNavigation from '../components/Manage/ManageNavigation'
 import { SegmentTitle } from '../elements/SegmentTitle'
 import { CallToActionButton } from '../elements/CallToActionButton'
-import ExamDetailSegment from '../components/ManageExam/ExamDetailSegment'
+import ExamDetailSegment from '../components/ExamDetailSegment'
 import { useEffect } from 'react'
 import { useState } from 'react'
 

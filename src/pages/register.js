@@ -1,7 +1,7 @@
 import React from 'react'
 import { Divider } from 'semantic-ui-react'
 import { lang } from '../constants'
-import RegisterForm from '../components/Register/RegisterForm'
+import RegisterForm from '../components/RegisterForm'
 import SocialLogin from '../components/Login/SocialLogin'
 
 const RegisterPage = () => {
@@ -21,7 +21,7 @@ const RegisterPage = () => {
         </div>
       </div>
     </div>
-  )  
+  )
 }
 
 export default RegisterPage
