@@ -95,7 +95,6 @@ export default (props) => {
       })
       .catch((error) => {
         toast.error('สร้างคำถามไม่สำเร็จ กรุณาลองใหม่อีกครั้ง')
-        console.error('===Create Question Error===', error)
         throw error
       })
   }
