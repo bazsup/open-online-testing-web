@@ -42,6 +42,9 @@ const ExamCreatePage = (props) => {
     if (startAt === null || endAt === null) {
       return toast.error('กรุณาเลือกเวลาเริ่มสอบ - สิ้นสุด ให้เรียบร้อย')
     }
+    if (selectedQuestions.length < 1) {
+      return toast.error('กรุณาเลือกคำถามอย่างน้อย 1 ข้อ')
+    }
     exam.questions = selectedQuestions
     exam.categories = categories
     exam.startAt = startAt.toISOString()
