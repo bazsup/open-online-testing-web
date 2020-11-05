@@ -165,12 +165,12 @@ pipeline {
                     sh "echo ============ Deploy to Kubernetes to ${env.SERVER_ENVIRONMENT} API ============="
                     // กำหนด Labels Tag ของ App
                     sh "sed -i 's/LABEL_VERSION/${env.LABEL_VERSION}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
+                     // กำหนด change cause ของ rollout history
+                    sh "sed -i 's/ENV_CHANGE_CAUSE_MESSAGE/[IMAGE] ${env.FULL_CONTAINER_IMAGE_PATH} - ${env.COMMIT_MESSAGE}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
                     // apply config map
                     sh "kubectl apply -f ${env.K8S_CONFIG_YAML_PROFILE}"
                     // สร้าง Deployment Resouce
                     sh "kubectl apply -f ${env.K8S_DEPLOY_YAML_PROFILE}"
-                     // กำหนด change cause ของ rollout history
-                    sh "sed -i 's/ENV_CHANGE_CAUSE_MESSAGE/[IMAGE] ${env.FULL_CONTAINER_IMAGE_PATH} - ${env.COMMIT_MESSAGE}/g' ${env.K8S_DEPLOY_YAML_PROFILE}"
                     // สร้าง Service Resouce สำหรับทำ Service Discovery
                     sh "kubectl apply -f ${env.K8S_SERVICE_YAML_PROFILE} --record=true"
                 }
