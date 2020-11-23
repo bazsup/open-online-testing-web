@@ -58,9 +58,6 @@ const LoginForm = ({ onSuccess, onError }) => {
             {`${lang.th.doesNotHaveAnAccount} `}
             <Link to="/register">{lang.th.clickToRegister}</Link>
           </p>
-          {/* <button onClick={logout} class="ui secondary button">
-            Logout
-          </button> */}
         </div>
       </div>
     </Form>
