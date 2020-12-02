@@ -42,6 +42,9 @@ const ExamCreatePage = (props) => {
     if (startAt === null || endAt === null) {
       return toast.error('กรุณาเลือกเวลาเริ่มสอบ - สิ้นสุด ให้เรียบร้อย')
     }
+    if (selectedQuestions.length < 1) {
+      return toast.error('กรุณาเลือกคำถามอย่างน้อย 1 ข้อ')
+    }
     exam.questions = selectedQuestions
     exam.categories = categories
     exam.startAt = startAt.toISOString()
@@ -189,16 +192,17 @@ const ScrollableQuestionList = ({
 const QuestionList = ({ questions, handleClick, icon }) => (
   <Menu fluid vertical style={{ minHeight: 250 }}>
     {questions.length === 0 && <Empty className="mt-5" />}
-    {questions.map((question, index) => (
-      <Menu.Item
-        key={question.id}
-        name={question.id}
-        onClick={() => handleClick(question, index)}
-      >
-        {icon}
-        {question.name}
-      </Menu.Item>
-    ))}
+    {questions.length > 0 &&
+      questions.map((question, index) => (
+        <Menu.Item
+          key={question.id}
+          name={question.id}
+          onClick={() => handleClick(question, index)}
+        >
+          {icon}
+          {question.name}
+        </Menu.Item>
+      ))}
   </Menu>
 )
 
