@@ -44,7 +44,7 @@ export const lang = {
     alreadyHaveAccount: 'มีบัญชีอยู่แล้ว?',
     passwordHint:
       'รหัสผ่านต้องประกอบด้วย ตัวอักษรทั้งพิมพ์เล็ก พิมพ์ใหญ่ และตัวเลขผสมกัน ความยาวไม่น้อยกว่า 8 ตัวอักษร',
-    passwordHintCheckList: ['ตัวอักษร (a-z, A-Z)', 'ตัวเลข (0-9)'],
+    passwordHintCheckList: ['ตัวอักษร (a-z)',  'ตัวอักษร (A-Z)', 'ตัวเลข (0-9)'],
 
     // header
     welcome: 'ยินดีต้อนรับ',
