@@ -21,15 +21,15 @@ export default () => {
   return (
     <React.Fragment>
       <ManageNavigation />
-      <div className='row justify-content-md-center mt-3'>
-        <div className='col-10'>
-          <Segment className='px-5 py-5'>
-            <div className='row'>
-              <div className='col-12'>
-                <div className='d-flex justify-content-between align-items-center mb-4'>
+      <div className="row justify-content-md-center mt-3">
+        <div className="col-10">
+          <Segment className="px-5 py-5">
+            <div className="row">
+              <div className="col-12">
+                <div className="d-flex justify-content-between align-items-center mb-4">
                   <SegmentTitle>จัดการคำถาม</SegmentTitle>
-                  <Link to='/manage/question/create'>
-                    <CallToActionButton content='+ สร้างคำถาม' />
+                  <Link to="/manage/question/create">
+                    <CallToActionButton content="+ สร้างคำถาม" />
                   </Link>
                 </div>
                 {questions.length === 0 ? (
@@ -38,7 +38,13 @@ export default () => {
                   </Segment>
                 ) : (
                   <React.Fragment>
-                    <Search className='mb-3' />
+                    <Search
+                      className="mb-3"
+                      style={{
+                        opacity: 0.5,
+                        pointerEvents: 'none',
+                      }}
+                    />
                     <Accordion fluid styled>
                       {questions.map(
                         ({ name, type, choices, categories }, index) => (
