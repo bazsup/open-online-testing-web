@@ -8,20 +8,20 @@ export default ({ name, type, choices = null, categories = [] }) => {
     <React.Fragment>
       <Accordion.Title
         active={active}
-        className='d-flex justify-content-between align-items-center'
+        className="d-flex justify-content-between align-items-center"
         onClick={() => setActive(!active)}
       >
         <div>
-          {type === 'OBJECTIVE' && <Icon name='dropdown' />}
+          {type === 'OBJECTIVE' && <Icon name="dropdown" />}
           {name}
           {categories.length > 0 && <CategoryList categories={categories} />}
         </div>
         <div>
-          <Button icon>
-            <Icon name='edit' />
+          <Button icon disabled>
+            <Icon name="edit" />
           </Button>
-          <Button icon>
-            <Icon name='trash' />
+          <Button icon disabled>
+            <Icon name="trash" />
           </Button>
         </div>
       </Accordion.Title>
