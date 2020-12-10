@@ -53,7 +53,10 @@ const RegisterForm = () => {
           name="password"
           required
           pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            e.target.setCustomValidity('')
+            setPassword(e.target.value)
+          }}
           onInvalid={(e) => {
             e.target.setCustomValidity(lang.th.passwordHint)
           }}
