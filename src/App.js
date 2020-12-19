@@ -60,7 +60,13 @@ function App() {
           <div className="container mt-5">
             <Switch>
               <Route exact path="/">
-                ยินดีต้อนรับ
+                ยินดีต้อนรับ <br />
+                <p>
+                  ผลงานนี้เป็นส่วนหนึ่งของ
+                  “ทุนเพชรพระจอมเกล้าเพื่อพัฒนาเทคโนโลยีและนวัตกรรมดิจิทัล
+                  (KMUTT-depa)” สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa) และ
+                  คณะเทคโนโลยีสารสนเทศ มจธ. (SIT)
+                </p>
               </Route>
               <UnAuthenticatedRoute
                 path="/login"
