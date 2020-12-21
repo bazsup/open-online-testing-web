@@ -57,6 +57,7 @@ pipeline {
                     env.SERVER_ENVIRONMENT = input_params.SERVER_ENVIRONMENT
                     env.TAG_VERSION = input_params.TAG_VERSION
                     env.LABEL_VERSION = input_params.LABEL_VERSION
+                    env.REACT_APP_TAG_VERSION = input_params.TAG_VERSION
                 }
             }
         }
@@ -72,11 +73,10 @@ pipeline {
 
             steps {
                 script {
-                
-                    sh 'echo ==='
-                    sh "yarn add react-scripts"
+                    sh "echo ${REACT_APP_TAG_VERSION}"
                     sh "echo REACT_APP_TAG_VERSION=${env.TAG_VERSION} > .env"
                     sh "cat .env"
+                    sh "yarn add react-scripts"
                     sh "yarn build"
                     stash name: 'static-artifact', includes: 'build/'
                 }
