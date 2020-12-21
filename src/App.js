@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import styled from '@emotion/styled'
 import Navbar from './components/Navbar'
 import Login from './pages/login'
 import ExamPage from './pages/exam'
@@ -18,6 +19,11 @@ import NotFound from './components/NotFound'
 import UnAuthenticatedRoute from './components/UnAuthenticatedRoute'
 import Oauth2RedirectHandler from './pages/oauth2RedirectHandler'
 import api from './api/instance'
+
+
+const Container = styled.div`
+  min-height: calc(100vh - 100px);
+`
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -57,7 +63,7 @@ function App() {
             isAuthenticated={isAuthenticated}
             setIsAuthenticated={setIsAuthenticated}
           />
-          <div className="container mt-5">
+          <Container className="container pt-5">
             <Switch>
               <Route exact path="/">
                 ยินดีต้อนรับ <br />
@@ -114,6 +120,9 @@ function App() {
               />
               <Route component={NotFound} />
             </Switch>
+          </Container>
+          <div className="bg-light py-3 text-center">
+          Open Online Testing Web (version {process.env.REACT_APP_TAG_VERSION || '1.0.0'})
           </div>
         </Router>
       </React.Fragment>
