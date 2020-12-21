@@ -14,7 +14,8 @@ pipeline {
         // ชื่อของเครื่องที่ต้องการจะ Hold Approve ก่อนที่จะ Deploy ขึ้นไป
         PRODUCTION_SERVER = "PROD"
         REACT_APP_BASE_API_URL = "https://api.opencloudnative.online"
-        REACT_APP_BASE_APP_URL = "https://depa.opencloudnative.online"       
+        REACT_APP_BASE_APP_URL = "https://depa.opencloudnative.online"      
+        REACT_APP_TAG_VERSION = "v0.0.0" 
     }
 
     stages {
@@ -71,13 +72,12 @@ pipeline {
 
             steps {
                 script {
+                
                     sh 'echo ==='
                     sh "yarn add react-scripts"
-                    // sh "echo REACT_APP_BASE_API_URL=${REACT_APP_BASE_API_URL} > .env"
-                    // sh "cat .env"
-                    sh "env"
-                    sh 'yarn build'
-                    // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                    sh "echo REACT_APP_TAG_VERSION=${env.TAG_VERSION} > .env"
+                    sh "cat .env"
+                    sh "yarn build"
                     stash name: 'static-artifact', includes: 'build/'
                 }
             }
