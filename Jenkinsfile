@@ -1,6 +1,9 @@
 def getServerEnvironmentList(){
   return ['DEV', 'SIT', 'UAT', 'PROD']
 }
+def getTagVersion(tagVersion){
+    return tagVersion
+}
 pipeline {
     agent any
 
@@ -15,7 +18,7 @@ pipeline {
         PRODUCTION_SERVER = "PROD"
         REACT_APP_BASE_API_URL = "https://api.opencloudnative.online"
         REACT_APP_BASE_APP_URL = "https://depa.opencloudnative.online"      
-        REACT_APP_TAG_VERSION = "v0.0.0" 
+        // REACT_APP_TAG_VERSION = getTagVersion("v0.0.0")
     }
 
     stages {
@@ -84,12 +87,6 @@ pipeline {
         }
 
         stage('Build Docker') {
-            // when {
-            //     anyOf {
-            //         branch 'master'
-            //         branch 'dev'
-            //     }
-            // }
 
             steps {
                 script {
