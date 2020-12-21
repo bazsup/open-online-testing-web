@@ -18,6 +18,7 @@ pipeline {
         PRODUCTION_SERVER = "PROD"
         REACT_APP_BASE_API_URL = "https://api.opencloudnative.online"
         REACT_APP_BASE_APP_URL = "https://depa.opencloudnative.online"      
+        // env ถ้าถูกกำหนดจากข้างบน System แล้ว .env ของ frontend ข้างล่างจะไม่มีผล
         // REACT_APP_TAG_VERSION = getTagVersion("v0.0.0")
     }
 
