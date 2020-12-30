@@ -94,13 +94,13 @@ export default (props) => {
       delete data.choices
     }
     console.log("Result Correct : "+numberOfCorrectAnswer)
-    if(data.type== QUESTIONTYPE.OBJECTIVE){
-      if(numberOfCorrectAnswer == 0){
+    if(data.type === QUESTIONTYPE.OBJECTIVE){
+      if(numberOfCorrectAnswer === 0){
         toast.error('สร้างคำถามไม่สำเร็จ กรุณาเฉลยคำตอบข้อที่ถูกต้องด้วย')
         return
       }
     }
-    if(data.categories.length==0){
+    if(data.categories.length===0){
       toast.error('สร้างคำถามไม่สำเร็จ กรุณาระบุประเภทหมวดหมู่คำถามด้วย')
       return
     }else{
