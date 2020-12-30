@@ -78,15 +78,26 @@ export default (props) => {
   const onSubmit = (data) => {
     data.categories = categories
     data.type = type
+    // Validate Choice that must have at leaast correctAnswer
+    console.log(data)
+    let numberOfCorrectAnswer = 0
     if (type === QUESTIONTYPE.OBJECTIVE) {
       data.choices.forEach(
-        (choice, index) =>
-          (choice.isCorrectAnswer = fields[index].isCorrectAnswer)
+        (choice, index) => {
+          choice.isCorrectAnswer = fields[index].isCorrectAnswer
+          if(choice.isCorrectAnswer === true){
+            numberOfCorrectAnswer++
+          }
+        }
       )
     } else {
       delete data.choices
     }
-    questionService
+    console.log("Result Correct : "+numberOfCorrectAnswer)
+    if(numberOfCorrectAnswer == 0){
+      toast.error('สร้างคำถามไม่สำเร็จ กรุณาเฉลยคำตอบข้อที่ถูกต้องด้วย')
+    }else{
+      questionService
       .createQuestion(data)
       .then(() => {
         toast.success('สร้างคำถามสำเร็จ')
@@ -97,6 +108,7 @@ export default (props) => {
         toast.error('สร้างคำถามไม่สำเร็จ กรุณาลองใหม่อีกครั้ง')
         throw error
       })
+    }
   }
 
   return (
