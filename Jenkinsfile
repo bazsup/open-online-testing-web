@@ -80,6 +80,7 @@ pipeline {
                     sh "echo ${REACT_APP_TAG_VERSION}"
                     sh "echo REACT_APP_TAG_VERSION=${env.TAG_VERSION} > .env"
                     sh "cat .env"
+                    sh "npx browserslist@latest --update-db"
                     sh "yarn add react-scripts"
                     sh "yarn build"
                     stash name: 'static-artifact', includes: 'build/'
