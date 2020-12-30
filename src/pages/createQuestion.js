@@ -94,8 +94,15 @@ export default (props) => {
       delete data.choices
     }
     console.log("Result Correct : "+numberOfCorrectAnswer)
-    if(numberOfCorrectAnswer == 0){
-      toast.error('สร้างคำถามไม่สำเร็จ กรุณาเฉลยคำตอบข้อที่ถูกต้องด้วย')
+    if(data.type== QUESTIONTYPE.OBJECTIVE){
+      if(numberOfCorrectAnswer == 0){
+        toast.error('สร้างคำถามไม่สำเร็จ กรุณาเฉลยคำตอบข้อที่ถูกต้องด้วย')
+        return
+      }
+    }
+    if(data.categories.length==0){
+      toast.error('สร้างคำถามไม่สำเร็จ กรุณาระบุประเภทหมวดหมู่คำถามด้วย')
+      return
     }else{
       questionService
       .createQuestion(data)
@@ -106,7 +113,6 @@ export default (props) => {
       })
       .catch((error) => {
         toast.error('สร้างคำถามไม่สำเร็จ กรุณาลองใหม่อีกครั้ง')
-        throw error
       })
     }
   }
